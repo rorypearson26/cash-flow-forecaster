@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
+import CurrencyIncrementer from "./CurrencyIncrementer";
 import "react-datepicker/dist/react-datepicker.css";
 
 class StartAmount extends Component {
@@ -20,7 +21,7 @@ class StartAmount extends Component {
     const CustomDateButton = ({ value, onClick }) => (
       <button
         type="button"
-        className="btn btn-outline-dark m-2"
+        className="btn btn-block btn-dark "
         onClick={onClick}
       >
         {value}
@@ -28,15 +29,19 @@ class StartAmount extends Component {
     );
 
     return (
-      <div>
-        <span className="badge badge-pill badge-primary">£{startAmount}</span>
-        <DatePicker
-          value={startDate}
-          selected={startDate}
-          dateFormat="dd/MM/yyyy"
-          customInput={<CustomDateButton />}
-          onChange={(date) => this.setStartDate(date)}
-        />
+      <div className="row m-2">
+        <div className="col-8 ">
+          <CurrencyIncrementer />
+        </div>
+        <div className="col-4 " align="center">
+          <DatePicker
+            value={startDate}
+            selected={startDate}
+            dateFormat="dd/MM/yyyy"
+            customInput={<CustomDateButton />}
+            onChange={(date) => this.setStartDate(date)}
+          />
+        </div>
       </div>
     );
   }
