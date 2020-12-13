@@ -1,31 +1,44 @@
 import React, { Component } from "react";
 
 class CurrencyIncrementer extends Component {
-  // state = { value: 50 };
-
   constructor() {
     super();
     this.state = {
       value: 0,
+      interval: 500,
+      changeFactor: 1.4,
     };
     this.timer = null;
-    this.addOne = this.addOne.bind(this);
-    this.minusOne = this.minusOne.bind(this);
+    this.updateValue = this.updateValue.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
   }
 
-  addOne() {
-    this.setState({ value: this.state.value + 1 });
-    this.timer = setTimeout(this.addOne, 50);
+  // True if plus pressed, false if subtracting
+  updateValue(addition) {
+    let { value, interval, changeFactor } = this.state;
+    value = this.changeValue({ value, addition });
+    this.setState({ value });
+    this.timer = setTimeout(() => this.updateValue(addition), interval);
+    interval = this.changeInterval(interval, changeFactor);
+    this.setState({ interval });
   }
 
-  minusOne() {
-    this.setState({ value: this.state.value - 1 });
-    this.timer = setTimeout(this.minusOne, 500);
+  // If addition is true, 1 is added, else 1 subtracted
+  changeValue({ value, addition }) {
+    return addition ? value + 1 : value - 1;
+  }
+
+  changeInterval(interval, changeFactor) {
+    //Don't let update rate fall below this
+    if (interval >= 1) {
+      interval = Math.round(interval / changeFactor);
+    }
+    return interval;
   }
 
   stopTimer() {
     clearTimeout(this.timer);
+    this.setState({ interval: 1000 });
   }
 
   render() {
@@ -36,8 +49,8 @@ class CurrencyIncrementer extends Component {
         <button
           type="button"
           className="col-3 btn btn-dark"
-          onMouseDown={this.minusOne}
-          onMouseUp={this.stopTimer}
+          onMouseDown={() => this.updateValue(false)}
+          onMouseUp={() => this.stopTimer()}
         >
           -
         </button>
@@ -52,8 +65,8 @@ class CurrencyIncrementer extends Component {
           id="increment"
           type="button"
           className="col-3 btn btn-dark"
-          onMouseDown={this.addOne}
-          onMouseUp={this.stopTimer}
+          onMouseDown={() => this.updateValue(true)}
+          onMouseUp={() => this.stopTimer()}
         >
           +
         </button>
