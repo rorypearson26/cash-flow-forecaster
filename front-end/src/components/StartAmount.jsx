@@ -17,7 +17,7 @@ class StartAmount extends Component {
   }
 
   render() {
-    const { startAmount, startDate } = this.state;
+    const { startDate } = this.state;
     const CustomDateButton = ({ value, onClick }) => (
       <button
         type="button"
@@ -29,18 +29,23 @@ class StartAmount extends Component {
     );
 
     return (
-      <div className="row m-2">
-        <div className="col-8 ">
-          <CurrencyIncrementer />
+      <div>
+        <div className="row m-2 text-center">
+          <h2>Start Amount and Date</h2>
         </div>
-        <div className="col-4 " align="center">
-          <DatePicker
-            value={startDate}
-            selected={startDate}
-            dateFormat="dd/MM/yyyy"
-            customInput={<CustomDateButton />}
-            onChange={(date) => this.setStartDate(date)}
-          />
+        <div className="row m-2">
+          <div className="col-8 ">
+            <CurrencyIncrementer />
+          </div>
+          <div className="col-4 " align="center">
+            <DatePicker
+              value={startDate}
+              selected={startDate}
+              dateFormat="dd/MM/yyyy"
+              customInput={<CustomDateButton />}
+              onChange={(date) => this.setStartDate(date)}
+            />
+          </div>
         </div>
       </div>
     );

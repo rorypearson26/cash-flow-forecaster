@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import StartAmount from "./StartAmount";
-import CurrencyIncrementer from "./CurrencyIncrementer";
+import DaysOfWeek from "./DaysOfWeek";
 
 class UserInput extends Component {
   state = {
@@ -18,8 +18,12 @@ class UserInput extends Component {
     ],
   };
   render() {
-    // return <StartAmount />
-    return <CurrencyIncrementer />;
+    return (
+      <div className="row">
+        <StartAmount />
+        <DaysOfWeek />
+      </div>
+    );
   }
 }
 
