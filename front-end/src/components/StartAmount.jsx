@@ -29,15 +29,15 @@ class StartAmount extends Component {
     );
 
     return (
-      <div>
-        <div className="row m-2 text-center">
-          <h2>Start Amount and Date</h2>
-        </div>
+      <div className="col-12">
         <div className="row m-2">
-          <div className="col-8 ">
+          <div className="col-6" align="center">
+            <h2>Start Amount and Date:</h2>
+          </div>
+          <div className="col-3 ">
             <CurrencyIncrementer />
           </div>
-          <div className="col-4 " align="center">
+          <div className="col-3 " align="center">
             <DatePicker
               value={startDate}
               selected={startDate}

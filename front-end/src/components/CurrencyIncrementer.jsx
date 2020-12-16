@@ -26,20 +26,25 @@ class CurrencyIncrementer extends Component {
   }
 
   // True if plus pressed, false if subtracting
-  updateValue(addition) {
-    let { value, interval, changeFactor } = this.state;
-    value = this.changeValue({ value, addition }).toFixed(2);
-    this.setState({ value });
-    this.timer = setTimeout(() => this.updateValue(addition), interval);
-    interval = this.changeInterval(interval, changeFactor);
-    this.setState({ interval });
+  updateValue(event, addition) {
+    if (event.button === 0) {
+      let { value, interval, changeFactor } = this.state;
+      value = this.changeValue({ value, addition }).toFixed(2);
+      this.setState({ value });
+      this.timer = setTimeout(
+        () => this.updateValue(event, addition),
+        interval
+      );
+      interval = this.changeInterval(interval, changeFactor);
+      this.setState({ interval });
+    } else {
+      return;
+    }
   }
 
   // If addition is true, 1 is added, else 1 subtracted
   changeValue({ value, addition }) {
-    // let formattedValue = this.formatInput(value);
     let formattedValue = this.roundTo(value, 2);
-    console.log(typeof formattedValue);
     return addition ? formattedValue + 1 : formattedValue - 1;
   }
 
@@ -75,8 +80,7 @@ class CurrencyIncrementer extends Component {
   }
 
   onChange({ currentTarget: input }) {
-    console.log(input.value);
-    this.setState({ value: this.roundTo(input.value, 5) });
+    this.setState({ value: this.roundTo(input.value, 2) });
   }
 
   render() {
@@ -87,7 +91,7 @@ class CurrencyIncrementer extends Component {
         <button
           type="button"
           className="col-3 btn btn-dark"
-          onMouseDown={() => this.updateValue(false)}
+          onMouseDown={(e) => this.updateValue(e, false)}
           onMouseUp={() => this.stopTimer()}
         >
           -
@@ -105,7 +109,7 @@ class CurrencyIncrementer extends Component {
           id="increment"
           type="button"
           className="col-3 btn btn-dark"
-          onMouseDown={() => this.updateValue(true)}
+          onMouseDown={(e) => this.updateValue(e, true)}
           onMouseUp={() => this.stopTimer()}
         >
           +

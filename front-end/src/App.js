@@ -7,7 +7,7 @@ class App extends Component {
     return (  
         <div className="container">
           <div className="row">
-            <div className="col-6">
+            <div className="col-12">
               <UserInput/>
             </div>
           </div>
