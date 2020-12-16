@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import StartAmount from "./StartAmount";
-import Transaction from "./Transaction";
+import TransactionForm from "./TransactionForm";
 
 class UserInput extends Component {
   state = {
@@ -19,16 +19,16 @@ class UserInput extends Component {
   };
   render() {
     return (
-      <div>
-        <div className="row mt-4">
+      <form>
+        <div className="row mt-4 ">
           <StartAmount />
         </div>
         <div className="row">
-          <div className="col-12">
-            <Transaction />
+          <div className="col-6 border">
+            <TransactionForm />
           </div>
         </div>
-      </div>
+      </form>
     );
   }
 }
