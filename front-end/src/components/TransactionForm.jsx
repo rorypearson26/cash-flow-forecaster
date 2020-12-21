@@ -12,7 +12,7 @@ class TransactionForm extends Component {
     return (
       <div className="row m-2" align="center">
         <div className="col-12 m-2">
-          <TransactionSlider diameter={50} widthRatio={8} />
+          <TransactionSlider diameter={60} widthRatio={2} />
         </div>
         <div className="col-12 m-2">
           <TransactionName />
@@ -28,10 +28,10 @@ class TransactionForm extends Component {
         </div>
         <div className="col-12">
           <div className="row ">
-            <div className="col-6 ">
+            <div className="col-6 align-self-center">
               <CustomCheck label="one-off" status={true} />
             </div>
-            <div className="col-6 ">
+            <div className="col-6 align-self-center">
               <CustomCheck label="repeat" status={false} />
             </div>
           </div>

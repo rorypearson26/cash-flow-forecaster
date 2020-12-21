@@ -1,27 +1,46 @@
 import React, { Component } from "react";
 
 class CustomCheck extends Component {
-  getStyle(status) {
-    console.log(status);
+  getCheckStyle(status) {
     const colour = status ? "green" : "red";
-    const style = {
+    const fontSize = status ? "3em" : "1em";
+    const checkStyle = {
       color: colour,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
       height: "100%",
-      fontSize: "2em",
+      fontSize: fontSize,
     };
-    return style;
+    return checkStyle;
+  }
+
+  getFontStyle() {
+    const fontStyle = {
+      color: "white",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100%",
+      fontSize: "1em",
+    };
+    return fontStyle;
   }
 
   render() {
     const { status, label } = this.props;
-    const { ...style } = this.getStyle(status);
+    const { ...checkStyle } = this.getCheckStyle(status);
+    const { ...fontStyle } = this.getFontStyle();
     return (
-      <div>
-        <label>{label}</label>
-        <i className="fas fa-check" style={{ ...style }}></i>
+      <div className="col-12">
+        <div className="row">
+          <div className="col-6 ">
+            <label style={{ ...fontStyle }}>{label}</label>
+          </div>
+          <div className="col-6 ">
+            <i className="fas fa-check " style={{ ...checkStyle }}></i>
+          </div>
+        </div>
       </div>
     );
   }
