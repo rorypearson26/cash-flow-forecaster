@@ -85,38 +85,43 @@ class CurrencyIncrementer extends Component {
 
   render() {
     const { value } = this.state;
+    const { label } = this.props;
 
     return (
-      <div className="row btn-group" role="group">
-        <button
-          type="button"
-          className="col-3 btn btn-dark"
-          onMouseDown={(e) => this.updateValue(e, false)}
-          onMouseUp={() => this.stopTimer()}
-        >
-          -
-        </button>
-        <input
-          className="col-6 quantity text-center"
-          value={value}
-          onChange={(e) => this.onChange(e)}
-          onBlur={(e) => this.onChange(e)}
-          name="quantity"
-          type="number"
-          placeholder="£"
-        />
-        <button
-          id="increment"
-          type="button"
-          className="col-3 btn btn-dark"
-          onMouseDown={(e) => this.updateValue(e, true)}
-          onMouseUp={() => this.stopTimer()}
-        >
-          +
-        </button>
+      <div>
+        {label === false ? null : <label>{label}</label>}
+        <div className="row btn-group" role="group">
+          <button
+            type="button"
+            className="col-3 btn btn-dark"
+            onMouseDown={(e) => this.updateValue(e, false)}
+            onMouseUp={() => this.stopTimer()}
+          >
+            -
+          </button>
+          <input
+            className="col-6 quantity text-center"
+            value={value}
+            onChange={(e) => this.onChange(e)}
+            onBlur={(e) => this.onChange(e)}
+            name="quantity"
+            type="number"
+            placeholder="£"
+          />
+          <button
+            id="increment"
+            type="button"
+            className="col-3 btn btn-dark"
+            onMouseDown={(e) => this.updateValue(e, true)}
+            onMouseUp={() => this.stopTimer()}
+          >
+            +
+          </button>
+        </div>
       </div>
     );
   }
 }
 
+CurrencyIncrementer.defaultProps = { label: false };
 export default CurrencyIncrementer;

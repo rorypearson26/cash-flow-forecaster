@@ -23,7 +23,6 @@ class TransactionSlider extends Component {
       height: "100%",
       fontSize: "1.5em",
       color: "white",
-      paddingRight: "2",
     };
     return fontStyle;
   }
