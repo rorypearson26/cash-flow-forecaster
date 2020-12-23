@@ -38,10 +38,10 @@ class CustomCheck extends Component {
     return (
       <div className="col-12">
         <div className="row">
-          <div className="col-6 ">
+          <div className="col-8 ">
             <label style={{ ...fontStyle }}>{label}</label>
           </div>
-          <div className="col-6 ">
+          <div className="col-4 ">
             <div className="fa-2x">
               <span className="fa-layers fa-fw " onClick={() => onClick()}>
                 <i

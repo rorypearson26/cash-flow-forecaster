@@ -4,6 +4,7 @@ import CurrencyIncrementer from "./CurrencyIncrementer";
 import TransactionName from "./TransactionName";
 import TransactionSlider from "./TransactionSlider";
 import CustomCheck from "./CustomCheck";
+import RepeatInput from "./RepeatInput";
 
 class TransactionForm extends Component {
   state = { repeat: true };
@@ -34,11 +35,11 @@ class TransactionForm extends Component {
           <CurrencyIncrementer label="WORST" />
         </div>
         <div className="col-12">
-          <div className="row ">
+          <div className="row m-2">
             <div className="col-6 align-self-center">
               <CustomCheck
                 key={`check${!repeat}`}
-                label="one-off"
+                label="ONE-OFF"
                 status={!repeat}
                 onClick={this.typeClicked}
               />
@@ -46,17 +47,14 @@ class TransactionForm extends Component {
             <div className="col-6 align-self-center">
               <CustomCheck
                 key={`check${repeat}`}
-                label="repeat"
+                label="REPEAT"
                 status={repeat}
                 onClick={this.typeClicked}
               />
             </div>
           </div>
         </div>
-
-        <div className="col-12 m-2">
-          <DaysOfWeek />
-        </div>
+        {repeat ? <RepeatInput /> : <DaysOfWeek />}
       </div>
     );
   }

@@ -30,17 +30,19 @@ class DaysOfWeek extends Component {
   render() {
     const days = [...this.state.days];
     return (
-      <div className="btn-group" role="group">
-        {days.map((day) => (
-          <button
-            type="button"
-            className={this.getButtonClasses(day)}
-            key={day.id}
-            onClick={() => this.onSelect(day)}
-          >
-            {day.day}
-          </button>
-        ))}
+      <div className="col-12">
+        <div className="btn-group" role="group">
+          {days.map((day) => (
+            <button
+              type="button"
+              className={this.getButtonClasses(day)}
+              key={day.id}
+              onClick={() => this.onSelect(day)}
+            >
+              {day.day}
+            </button>
+          ))}
+        </div>
       </div>
     );
   }
