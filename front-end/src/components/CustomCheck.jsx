@@ -1,36 +1,40 @@
 import React, { Component } from "react";
 
 class CustomCheck extends Component {
-  getCheckStyle(status) {
-    const colour = status ? "green" : "red";
-    const fontSize = status ? "3em" : "1em";
-    const checkStyle = {
-      color: colour,
+  getGeneralStyle() {
+    const generalStyle = {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
       height: "100%",
-      fontSize: fontSize,
+      color: "white",
     };
+    return generalStyle;
+  }
+
+  getCheckStyle(status, generalStyle) {
+    const colour = status ? "green" : "white";
+    let checkStyle = {
+      color: colour,
+      cursor: "pointer",
+    };
+    checkStyle = { ...generalStyle, ...checkStyle };
     return checkStyle;
   }
 
-  getFontStyle() {
-    const fontStyle = {
-      color: "white",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100%",
-      fontSize: "1em",
+  getFontStyle(generalStyle) {
+    let fontStyle = {
+      fontSize: "1.5em",
     };
+    fontStyle = { ...fontStyle, ...generalStyle };
     return fontStyle;
   }
 
   render() {
-    const { status, label } = this.props;
-    const { ...checkStyle } = this.getCheckStyle(status);
-    const { ...fontStyle } = this.getFontStyle();
+    const { status, label, onClick } = this.props;
+    const generalStyle = this.getGeneralStyle();
+    const { ...checkStyle } = this.getCheckStyle(status, generalStyle);
+    const { ...fontStyle } = this.getFontStyle(generalStyle);
     return (
       <div className="col-12">
         <div className="row">
@@ -38,7 +42,16 @@ class CustomCheck extends Component {
             <label style={{ ...fontStyle }}>{label}</label>
           </div>
           <div className="col-6 ">
-            <i className="fas fa-check " style={{ ...checkStyle }}></i>
+            <div className="fa-2x">
+              <span className="fa-layers fa-fw " onClick={() => onClick()}>
+                <i
+                  className="fas fa-circle"
+                  data-fa-transform="grow-4"
+                  style={{ ...generalStyle }}
+                />
+                <i className="fas fa-check " style={{ ...checkStyle }} />
+              </span>
+            </div>
           </div>
         </div>
       </div>

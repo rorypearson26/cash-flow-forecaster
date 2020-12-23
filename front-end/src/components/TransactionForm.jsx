@@ -6,11 +6,18 @@ import TransactionSlider from "./TransactionSlider";
 import CustomCheck from "./CustomCheck";
 
 class TransactionForm extends Component {
-  onClick() {}
+  state = { repeat: true };
+
+  typeClicked = () => {
+    let { repeat } = this.state;
+    repeat = repeat ? false : true;
+    this.setState({ repeat });
+  };
 
   render() {
+    const { repeat } = this.state;
     return (
-      <div className="row m-2" align="center">
+      <div className="row m-2 noselect" align="center">
         <div className="col-12 m-2">
           <TransactionSlider diameter={60} widthRatio={2} />
         </div>
@@ -29,10 +36,20 @@ class TransactionForm extends Component {
         <div className="col-12">
           <div className="row ">
             <div className="col-6 align-self-center">
-              <CustomCheck label="one-off" status={true} />
+              <CustomCheck
+                key={`check${!repeat}`}
+                label="one-off"
+                status={!repeat}
+                onClick={this.typeClicked}
+              />
             </div>
             <div className="col-6 align-self-center">
-              <CustomCheck label="repeat" status={false} />
+              <CustomCheck
+                key={`check${repeat}`}
+                label="repeat"
+                status={repeat}
+                onClick={this.typeClicked}
+              />
             </div>
           </div>
         </div>
