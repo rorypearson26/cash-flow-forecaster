@@ -27,13 +27,15 @@ class CustomDatePicker extends Component {
     );
 
     return (
-      <DatePicker
-        value={startDate}
-        selected={startDate}
-        dateFormat="dd/MM/yyyy"
-        customInput={<CustomDateButton />}
-        onChange={(date) => this.setStartDate(date)}
-      />
+      <div className="col-12">
+        <DatePicker
+          value={startDate}
+          selected={startDate}
+          dateFormat="dd/MM/yyyy"
+          customInput={<CustomDateButton />}
+          onChange={(date) => this.setStartDate(date)}
+        />
+      </div>
     );
   }
 }

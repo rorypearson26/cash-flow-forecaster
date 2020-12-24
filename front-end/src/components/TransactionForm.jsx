@@ -5,9 +5,10 @@ import TransactionName from "./TransactionName";
 import TransactionSlider from "./TransactionSlider";
 import CustomCheck from "./CustomCheck";
 import RepeatInput from "./RepeatInput";
+import CustomDatePicker from "./CustomDatePicker";
 
 class TransactionForm extends Component {
-  state = { repeat: true };
+  state = { repeat: true, repeatOnDays: true };
 
   typeClicked = () => {
     let { repeat } = this.state;
@@ -15,8 +16,15 @@ class TransactionForm extends Component {
     this.setState({ repeat });
   };
 
+  repeatTypeClicked = () => {
+    let { repeatOnDays } = this.state;
+    repeatOnDays = repeatOnDays ? false : true;
+    console.log("HERE");
+    this.setState({ repeatOnDays });
+  };
+
   render() {
-    const { repeat } = this.state;
+    const { repeat, repeatOnDays } = this.state;
     return (
       <div className="row m-2 noselect" align="center">
         <div className="col-12 m-2">
@@ -54,7 +62,11 @@ class TransactionForm extends Component {
             </div>
           </div>
         </div>
-        {repeat ? <RepeatInput /> : <DaysOfWeek />}
+        {repeat ? (
+          <RepeatInput status={repeatOnDays} onClick={this.repeatTypeClicked} />
+        ) : (
+          <CustomDatePicker />
+        )}
       </div>
     );
   }
