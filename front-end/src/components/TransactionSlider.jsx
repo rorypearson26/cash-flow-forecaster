@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Switch from "react-switch";
 
 class TransactionSlider extends Component {
-  state = { checked: false };
+  state = { checked: true };
 
   handleChange(checked) {
     this.setState({ checked });

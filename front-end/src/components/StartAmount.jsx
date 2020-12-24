@@ -1,33 +1,10 @@
 import React, { Component } from "react";
-import DatePicker from "react-datepicker";
 import CurrencyIncrementer from "./CurrencyIncrementer";
 import "react-datepicker/dist/react-datepicker.css";
+import CustomDatePicker from "./CustomDatePicker";
 
 class StartAmount extends Component {
-  state = { startAmount: 0, startDate: "" };
-
-  componentDidMount() {
-    var startDate = new Date();
-    this.setState({ startDate });
-  }
-
-  setStartDate(date) {
-    const startDate = date;
-    this.setState({ startDate });
-  }
-
   render() {
-    const { startDate } = this.state;
-    const CustomDateButton = ({ value, onClick }) => (
-      <button
-        type="button"
-        className="btn btn-block btn-dark "
-        onClick={onClick}
-      >
-        {value}
-      </button>
-    );
-
     return (
       <div className="col-12">
         <div className="row m-2">
@@ -38,13 +15,7 @@ class StartAmount extends Component {
             <CurrencyIncrementer />
           </div>
           <div className="col-3 " align="center">
-            <DatePicker
-              value={startDate}
-              selected={startDate}
-              dateFormat="dd/MM/yyyy"
-              customInput={<CustomDateButton />}
-              onChange={(date) => this.setStartDate(date)}
-            />
+            <CustomDatePicker />
           </div>
         </div>
       </div>
