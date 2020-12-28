@@ -63,9 +63,9 @@ class CurrencyIncrementer extends Component {
       digits = 0;
     }
 
-    var multiplicator = Math.pow(10, digits);
-    n = parseFloat((n * multiplicator).toFixed(11));
-    var test = Math.round(n) / multiplicator;
+    var multiplier = Math.pow(10, digits);
+    n = parseFloat((n * multiplier).toFixed(11));
+    var test = Math.round(n) / multiplier;
     return +test.toFixed(digits);
   }
 
@@ -79,9 +79,9 @@ class CurrencyIncrementer extends Component {
     this.resetInterval();
   }
 
-  onChange({ currentTarget: input }) {
-    this.setState({ value: this.roundTo(input.value, 2) });
-  }
+  // onChange({ currentTarget: input }) {
+  //   this.setState({ value: this.roundTo(input.value, 2) });
+  // }
 
   render() {
     const { value } = this.state;
@@ -100,10 +100,9 @@ class CurrencyIncrementer extends Component {
             -
           </button>
           <input
-            className="col-6 quantity text-center"
+            className="col-6 quantity text-center noselect"
+            readonly="readonly"
             value={value}
-            onChange={(e) => this.onChange(e)}
-            onBlur={(e) => this.onChange(e)}
             name="quantity"
             type="number"
             placeholder="£"

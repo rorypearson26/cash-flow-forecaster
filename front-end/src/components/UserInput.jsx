@@ -4,12 +4,13 @@ import TransactionForm from "./TransactionForm";
 
 class UserInput extends Component {
   state = {
+    startData: { date: "", amount: "" },
     transactions: [
       {
         id: 0,
-        label: "Rent",
+        label: "",
         income: false,
-        value: 500,
+        values: { low: 0, high: 50, expected: 25 },
         days: [],
         dayNumber: 1,
         date: new Date(1970, 1, 1),
@@ -17,6 +18,7 @@ class UserInput extends Component {
       },
     ],
   };
+
   render() {
     return (
       <form>
@@ -24,7 +26,7 @@ class UserInput extends Component {
           <StartAmount />
         </div>
         <div className="row">
-          <div className="col-6 border">
+          <div className="col-sm-12 col-md-6 border">
             <TransactionForm />
           </div>
         </div>

@@ -2,12 +2,6 @@ import React, { Component } from "react";
 import Switch from "react-switch";
 
 class TransactionSlider extends Component {
-  state = { checked: true };
-
-  handleChange(checked) {
-    this.setState({ checked });
-  }
-
   formatProps() {
     const { diameter, widthRatio } = this.props;
     const height = diameter + 2;
@@ -29,13 +23,14 @@ class TransactionSlider extends Component {
 
   render() {
     const { diameter, height, width } = this.formatProps();
+    const { onChange, checked } = this.props;
     const { ...fontStyle } = this.getStyle();
     const handleColour = "#d1d1d1";
     return (
       <label htmlFor="icon-switch">
         <Switch
-          onChange={(e) => this.handleChange(e)}
-          checked={this.state.checked}
+          onChange={(e) => onChange(e)}
+          checked={checked}
           handleDiameter={diameter}
           onHandleColor={handleColour}
           offHandleColor={handleColour}

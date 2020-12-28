@@ -4,8 +4,21 @@ import CustomCheck from "./CustomCheck";
 import DaysOfWeek from "./DaysOfWeek";
 
 class RepeatInput extends Component {
+  state = { repeatType: "", frequency: "" };
+  handleFrequencyChange(e) {
+    const frequency = parseInt(e.target.value);
+    this.setState({ frequency });
+  }
+
+  handleRepTypeChange(e) {
+    const repeatType = e.target.value;
+    this.setState({ repeatType });
+  }
+
   render() {
     const { status, onClick } = this.props;
+    const { repeatType, frequency } = this.state;
+
     return (
       <div>
         <div className="col-12">
@@ -34,7 +47,11 @@ class RepeatInput extends Component {
           <div className="col-12">
             <div className="row ">
               <div className="col-6">
-                <select className="custom-select ">
+                <select
+                  value={frequency}
+                  className="custom-select "
+                  onChange={(e) => this.handleFrequencyChange(e)}
+                >
                   <option hidden>Every nth</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -43,11 +60,17 @@ class RepeatInput extends Component {
                 </select>
               </div>
               <div className="col-6">
-                <select className="custom-select  ">
+                <select
+                  value={repeatType}
+                  className="custom-select "
+                  onChange={(e) => this.handleRepTypeChange(e)}
+                >
                   <option hidden>Period</option>
-                  <option value="W">Week</option>
-                  <option value="M">Month</option>
-                  <option value="Y">Year</option>
+                  <option value="W">{`Week${frequency > 1 ? "s" : ""}`}</option>
+                  <option value="M">{`Month${
+                    frequency > 1 ? "s" : ""
+                  }`}</option>
+                  <option value="Y">{`Year${frequency > 1 ? "s" : ""}`}</option>
                 </select>
               </div>
             </div>
