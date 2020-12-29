@@ -5,29 +5,32 @@ import CurrencyIncrementer from "./CurrencyIncrementer";
 import CustomCheck from "./CustomCheck";
 import RepeatInput from "./RepeatInput";
 import CustomDatePicker from "./CustomDatePicker";
+import IncrementerGroup from "./IncrementerGroup";
 
 class TransactionForm extends Component {
-  state = {
-    income: false,
-    label: "",
-    values: { low: "", high: "", expected: "" },
-    repeat: true,
-    repeatOnDays: true,
-    days: [],
-    repeatDate: "",
-    oneOffDate: "",
-    repeatType: "",
-    repeatFreqency: "",
-  };
+  constructor() {
+    super();
+    this.state = {
+      income: false,
+      label: "",
+      values: { low: null, high: null, expected: null },
+      repeat: true,
+      repeatOnDays: true,
+      days: [],
+      repeatDate: "",
+      oneOffDate: "",
+      repeatType: "",
+      repeatFreqency: "",
+    };
+  }
 
   handleIncomeTypeChange = (checked) => {
     let { income } = this.state;
     income = checked;
-    console.log(income);
     this.setState({ income });
   };
 
-  typeClicked = () => {
+  repeatClicked = () => {
     let { repeat } = this.state;
     repeat = repeat ? false : true;
     this.setState({ repeat });
@@ -41,7 +44,7 @@ class TransactionForm extends Component {
   };
 
   render() {
-    const { repeat, repeatOnDays, income } = this.state;
+    const { repeat, repeatOnDays, income, values } = this.state;
     return (
       <div className="row m-2 noselect" align="center">
         <div className="col-12 m-2">
@@ -55,15 +58,33 @@ class TransactionForm extends Component {
         <div className="col-12 m-2">
           <TransactionName />
         </div>
-        <div className="col-12 m-2">
-          <CurrencyIncrementer label="BEST" />
+        <div className="col-12">
+          <IncrementerGroup income={income} />
+        </div>
+        {/* <div className="col-12 m-2">
+          <CurrencyIncrementer
+            label="BEST"
+            value={values.low}
+            onMouseDown={this.updateValue}
+            onMouseUp={this.stopTimer}
+          />
         </div>
         <div className="col-12 m-2">
-          <CurrencyIncrementer label="AVERAGE" />
+          <CurrencyIncrementer
+            label="EXPECTED"
+            value={values.expected}
+            onMouseDown={this.updateValue}
+            onMouseUp={this.stopTimer}
+          />
         </div>
         <div className="col-12 m-2">
-          <CurrencyIncrementer label="WORST" />
-        </div>
+          <CurrencyIncrementer
+            label="WORST"
+            value={values.high}
+            onMouseDown={this.updateValue}
+            onMouseUp={this.stopTimer}
+          />
+        </div> */}
         <div className="col-12">
           <div className="row m-2">
             <div className="col-6 align-self-center">
@@ -71,7 +92,7 @@ class TransactionForm extends Component {
                 key={`check${!repeat}`}
                 label="ONE-OFF"
                 status={!repeat}
-                onClick={this.typeClicked}
+                onClick={this.repeatClicked}
               />
             </div>
             <div className="col-6 align-self-center">
@@ -79,7 +100,7 @@ class TransactionForm extends Component {
                 key={`check${repeat}`}
                 label="REPEAT"
                 status={repeat}
-                onClick={this.typeClicked}
+                onClick={this.repeatClicked}
               />
             </div>
           </div>

@@ -35,7 +35,6 @@ class CustomCheck extends Component {
     const generalStyle = this.getGeneralStyle();
     const { ...checkStyle } = this.getCheckStyle(status, generalStyle);
     const { ...fontStyle } = this.getFontStyle(generalStyle);
-    console.log(label + ":  " + status);
     return (
       <div className="col-12">
         <div className="row">
