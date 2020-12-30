@@ -2,17 +2,43 @@ import React, { Component } from "react";
 import CurrencyIncrementer from "./CurrencyIncrementer";
 
 class IncrementerGroup extends Component {
-  state = { values: { low: null, high: null, expected: null } };
+  constructor() {
+    super();
+    const { interval } = this.startInterval;
+    this.resetInterval = this.resetInterval.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.timer = null;
+    this.state = {
+      interval: interval,
+      changeFactor: 1.4,
+      values: [0, 50, 60],
+    };
+  }
+  get startInterval() {
+    return {
+      interval: 500,
+    };
+  }
+
+  stopTimer() {
+    clearTimeout(this.timer);
+    this.resetInterval();
+  }
+
+  resetInterval() {
+    this.setState(this.startInterval);
+  }
 
   // True if plus pressed, false if subtracting
-  updateValue = (input) => {
-    let { event, addition } = input;
+  onMouseDown = ({ event, addition, index }) => {
     if (event.button === 0) {
-      let { value, interval, changeFactor } = this.state;
-      value = this.changeValue({ value, addition }).toFixed(2);
-      this.setState({ value });
+      let { values, interval, changeFactor } = this.state;
+      let currentValue = values[index];
+      let props = { index, values, currentValue, addition };
+      values = addition === 1 ? this.increasing(props) : this.decreasing(props);
+      this.setState({ values });
       this.timer = setTimeout(
-        () => this.updateValue(event, addition),
+        () => this.onMouseDown({ event, addition, index }),
         interval
       );
       interval = this.changeInterval(interval, changeFactor);
@@ -22,10 +48,50 @@ class IncrementerGroup extends Component {
     }
   };
 
-  // If addition is true, 1 is added, else 1 subtracted
-  changeValue({ value, addition }) {
-    let formattedValue = this.roundTo(value, 2);
-    return addition ? formattedValue + 1 : formattedValue - 1;
+  decreasing(props) {
+    let { index, values, currentValue, addition } = props;
+    console.log(
+      `values: ${values}, index: ${index}, currentVal: ${currentValue}`
+    );
+    const nextIndex = index + addition;
+    let newValue = currentValue + addition;
+
+    //Update props:
+    props = { ...props, currentValue: newValue, index: nextIndex };
+
+    if (index <= 0) {
+      if (newValue <= 0) {
+        newValue = 0;
+      }
+      values[index] = newValue;
+      return values;
+    }
+    if (newValue >= 0 && newValue <= values[nextIndex]) {
+      values[index] = newValue;
+      values = this.decreasing(props);
+    } else if (newValue >= 0) {
+      values[index] = newValue;
+    }
+
+    return values;
+  }
+
+  increasing(props) {
+    let { index, values, currentValue, addition } = props;
+    const nextIndex = index + addition;
+    let newValue = currentValue + addition;
+    //Update props:
+    props = { ...props, currentValue: newValue, index: nextIndex };
+    if (index >= 2) {
+      values[index] = newValue;
+      return values;
+    }
+    values[index] = newValue;
+    if (newValue >= values[nextIndex]) {
+      values = this.increasing(props);
+    }
+
+    return values;
   }
 
   changeInterval(interval, changeFactor) {
@@ -38,16 +104,16 @@ class IncrementerGroup extends Component {
     return minInterval;
   }
 
-  roundTo(n, digits) {
-    if (digits === undefined) {
-      digits = 0;
-    }
+  // roundTo(n, digits) {
+  //   if (digits === undefined) {
+  //     digits = 0;
+  //   }
 
-    var multiplier = Math.pow(10, digits);
-    n = parseFloat((n * multiplier).toFixed(11));
-    var test = Math.round(n) / multiplier;
-    return +test.toFixed(digits);
-  }
+  //   var multiplier = Math.pow(10, digits);
+  //   n = parseFloat((n * multiplier).toFixed(11));
+  //   var test = Math.round(n) / multiplier;
+  //   return +test.toFixed(digits);
+  // }
 
   stopTimer() {
     clearTimeout(this.timer);
@@ -57,29 +123,37 @@ class IncrementerGroup extends Component {
   render() {
     const { values } = this.state;
     const { income } = this.props;
+    const index = {
+      best: income ? 2 : 0,
+      expected: 1,
+      worst: income ? 0 : 2,
+    };
     return (
       <div>
         <div className="col-12 m-2">
           <CurrencyIncrementer
             label="BEST"
-            value={income ? values.high : values.low}
-            onMouseDown={this.updateValue}
+            index={index.best}
+            value={values[index.best]}
+            onMouseDown={this.onMouseDown}
             onMouseUp={this.stopTimer}
           />
         </div>
         <div className="col-12 m-2">
           <CurrencyIncrementer
             label="EXPECTED"
-            value={values.expected}
-            onMouseDown={this.updateValue}
+            index={index.expected}
+            value={values[index.expected]}
+            onMouseDown={this.onMouseDown}
             onMouseUp={this.stopTimer}
           />
         </div>
         <div className="col-12 m-2">
           <CurrencyIncrementer
             label="WORST"
-            value={income ? values.low : values.high}
-            onMouseDown={this.updateValue}
+            index={index.worst}
+            value={values[index.worst]}
+            onMouseDown={this.onMouseDown}
             onMouseUp={this.stopTimer}
           />
         </div>
