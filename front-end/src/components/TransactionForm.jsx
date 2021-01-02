@@ -30,7 +30,7 @@ class TransactionForm extends Component {
       repeatDate: new Date(),
       oneOffDate: new Date(),
       repeatType: "",
-      repeatFreqency: "",
+      frequency: "",
       interval: interval,
       changeFactor: 1.4,
     };
@@ -127,12 +127,24 @@ class TransactionForm extends Component {
     this.setState({ repeatOnDays });
   };
 
+  handleFrequencyChange = (e) => {
+    const frequency = parseInt(e.target.value);
+    this.setState({ frequency });
+  };
+
+  handleRepTypeChange = (e) => {
+    const repeatType = e.target.value;
+    this.setState({ repeatType });
+  };
+
   render() {
     const {
       days,
       oneOffDate,
       repeatDate,
       repeat,
+      repeatType,
+      frequency,
       repeatOnDays,
       income,
       values,
@@ -187,6 +199,10 @@ class TransactionForm extends Component {
                   days={days}
                   name="repeatDate"
                   date={repeatDate}
+                  handleFrequencyChange={this.handleFrequencyChange}
+                  handleRepTypeChange={this.handleRepTypeChange}
+                  repeatType={repeatType}
+                  frequency={frequency}
                 />
               ) : (
                 <CustomDatePicker

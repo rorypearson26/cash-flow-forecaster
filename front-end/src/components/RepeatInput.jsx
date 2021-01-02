@@ -4,17 +4,6 @@ import CustomCheck from "./CustomCheck";
 import DaysOfWeek from "./DaysOfWeek";
 
 class RepeatInput extends Component {
-  state = { repeatType: "", frequency: "" };
-  handleFrequencyChange(e) {
-    const frequency = parseInt(e.target.value);
-    this.setState({ frequency });
-  }
-
-  handleRepTypeChange(e) {
-    const repeatType = e.target.value;
-    this.setState({ repeatType });
-  }
-
   render() {
     const {
       status,
@@ -24,8 +13,11 @@ class RepeatInput extends Component {
       onDateChange,
       name,
       date,
+      repeatType,
+      frequency,
+      handleFrequencyChange,
+      handleRepTypeChange,
     } = this.props;
-    const { repeatType, frequency } = this.state;
 
     return (
       <div>
@@ -59,7 +51,7 @@ class RepeatInput extends Component {
               <select
                 value={frequency}
                 className="custom-select "
-                onChange={(e) => this.handleFrequencyChange(e)}
+                onChange={(e) => handleFrequencyChange(e)}
               >
                 <option hidden>Every nth</option>
                 <option value="1">1</option>
@@ -72,7 +64,7 @@ class RepeatInput extends Component {
               <select
                 value={repeatType}
                 className="custom-select "
-                onChange={(e) => this.handleRepTypeChange(e)}
+                onChange={(e) => handleRepTypeChange(e)}
               >
                 <option hidden>Period</option>
                 <option value="W">{`Week${frequency > 1 ? "s" : ""}`}</option>

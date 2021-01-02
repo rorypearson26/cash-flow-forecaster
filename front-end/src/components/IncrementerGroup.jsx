@@ -4,11 +4,8 @@ import CurrencyIncrementer from "./CurrencyIncrementer";
 class IncrementerGroup extends Component {
   static decreasing(props) {
     let { index, values, currentValue, addition } = props;
-    console.log(
-      `values: ${values}, index: ${index}, currentVal: ${currentValue}`
-    );
     const nextIndex = index + addition;
-    let newValue = currentValue + addition;
+    let newValue = currentValue + addition * 5;
 
     //Update props:
     props = { ...props, currentValue: newValue, index: nextIndex };
@@ -33,7 +30,7 @@ class IncrementerGroup extends Component {
   static increasing(props) {
     let { index, values, currentValue, addition } = props;
     const nextIndex = index + addition;
-    let newValue = currentValue + addition;
+    let newValue = currentValue + addition * 5;
     //Update props:
     props = { ...props, currentValue: newValue, index: nextIndex };
     if (index >= 2) {
