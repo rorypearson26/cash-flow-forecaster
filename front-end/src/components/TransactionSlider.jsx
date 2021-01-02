@@ -27,23 +27,25 @@ class TransactionSlider extends Component {
     const { ...fontStyle } = this.getStyle();
     const handleColour = "#d1d1d1";
     return (
-      <label htmlFor="icon-switch">
-        <Switch
-          onChange={(e) => onChange(e)}
-          checked={checked}
-          handleDiameter={diameter}
-          onHandleColor={handleColour}
-          offHandleColor={handleColour}
-          width={width}
-          height={height}
-          offColor="#ff0000"
-          onColor="#009405"
-          activeBoxShadow="0 0 4px 0px #ffffff"
-          boxShadow="0 0 2px 4px #000000"
-          uncheckedIcon={<div style={{ ...fontStyle }}>OUT</div>}
-          checkedIcon={<div style={{ ...fontStyle }}>IN</div>}
-        />
-      </label>
+      <div className="col-12">
+        <label htmlFor="icon-switch">
+          <Switch
+            onChange={(e) => onChange(e)}
+            checked={checked}
+            handleDiameter={diameter}
+            onHandleColor={handleColour}
+            offHandleColor={handleColour}
+            width={width}
+            height={height}
+            offColor="#ff0000"
+            onColor="#009405"
+            activeBoxShadow="0 0 4px 0px #ffffff"
+            boxShadow="0 0 2px 4px #000000"
+            uncheckedIcon={<div style={{ ...fontStyle }}>OUT</div>}
+            checkedIcon={<div style={{ ...fontStyle }}>IN</div>}
+          />
+        </label>
+      </div>
     );
   }
 }

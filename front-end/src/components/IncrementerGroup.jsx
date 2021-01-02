@@ -66,33 +66,39 @@ class IncrementerGroup extends Component {
       worst: income ? 0 : 2,
     };
     return (
-      <div>
-        <div className="col-12 m-2">
-          <CurrencyIncrementer
-            label="BEST"
-            index={index.best}
-            value={values[index.best]}
-            onMouseDown={onMouseDown}
-            onMouseUp={onMouseUp}
-          />
+      <div className="col-12">
+        <div className="row m-2">
+          <div className="col-12 ">
+            <CurrencyIncrementer
+              label="BEST"
+              index={index.best}
+              value={values[index.best]}
+              onMouseDown={onMouseDown}
+              onMouseUp={onMouseUp}
+            />
+          </div>
         </div>
-        <div className="col-12 m-2">
-          <CurrencyIncrementer
-            label="EXPECTED"
-            index={index.expected}
-            value={values[index.expected]}
-            onMouseDown={onMouseDown}
-            onMouseUp={onMouseUp}
-          />
+        <div className="row m-2">
+          <div className="col-12 ">
+            <CurrencyIncrementer
+              label="EXPECTED"
+              index={index.expected}
+              value={values[index.expected]}
+              onMouseDown={onMouseDown}
+              onMouseUp={onMouseUp}
+            />
+          </div>
         </div>
-        <div className="col-12 m-2">
-          <CurrencyIncrementer
-            label="WORST"
-            index={index.worst}
-            value={values[index.worst]}
-            onMouseDown={onMouseDown}
-            onMouseUp={onMouseUp}
-          />
+        <div className="row m-2">
+          <div className="col-12">
+            <CurrencyIncrementer
+              label="WORST"
+              index={index.worst}
+              value={values[index.worst]}
+              onMouseDown={onMouseDown}
+              onMouseUp={onMouseUp}
+            />
+          </div>
         </div>
       </div>
     );

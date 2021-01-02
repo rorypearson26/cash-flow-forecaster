@@ -2,20 +2,8 @@ import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 
 class CustomDatePicker extends Component {
-  state = { startAmount: 0, startDate: "" };
-
-  componentDidMount() {
-    var startDate = new Date();
-    this.setState({ startDate });
-  }
-
-  setStartDate(date) {
-    const startDate = date;
-    this.setState({ startDate });
-  }
-
   render() {
-    const { startDate } = this.state;
+    const { name, date, onDateChange } = this.props;
     const CustomDateButton = ({ value, onClick }) => (
       <button
         type="button"
@@ -29,11 +17,11 @@ class CustomDatePicker extends Component {
     return (
       <div className="col-12">
         <DatePicker
-          value={startDate}
-          selected={startDate}
+          value={date}
+          selected={date}
           dateFormat="dd/MM/yyyy"
           customInput={<CustomDateButton />}
-          onChange={(date) => this.setStartDate(date)}
+          onChange={(date) => onDateChange({ date, name })}
         />
       </div>
     );

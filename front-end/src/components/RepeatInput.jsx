@@ -16,7 +16,15 @@ class RepeatInput extends Component {
   }
 
   render() {
-    const { status, onClick } = this.props;
+    const {
+      status,
+      days,
+      onClick,
+      onDaysSelect,
+      onDateChange,
+      name,
+      date,
+    } = this.props;
     const { repeatType, frequency } = this.state;
 
     return (
@@ -41,8 +49,8 @@ class RepeatInput extends Component {
         </div>
         {status ? (
           <div className="row">
-            <div className="col-12 border">
-              <DaysOfWeek />
+            <div className="col-12 ">
+              <DaysOfWeek days={days} onClick={onDaysSelect} />
             </div>
           </div>
         ) : (
@@ -79,7 +87,11 @@ class RepeatInput extends Component {
             </div>
             <div className="row">
               <div className="col-12">
-                <CustomDatePicker />
+                <CustomDatePicker
+                  name={name}
+                  date={date}
+                  onDateChange={onDateChange}
+                />
               </div>
             </div>
           </div>

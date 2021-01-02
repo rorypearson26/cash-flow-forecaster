@@ -5,6 +5,7 @@ import CustomDatePicker from "./CustomDatePicker";
 
 class StartAmount extends Component {
   render() {
+    const { onMouseDown, onMouseUp, value } = this.props;
     return (
       <div className="col-12">
         <div className="row m-2">
@@ -12,7 +13,11 @@ class StartAmount extends Component {
             <h2>Start Amount and Date:</h2>
           </div>
           <div className="col-3 ">
-            <CurrencyIncrementer />
+            <CurrencyIncrementer
+              value={value}
+              onMouseDown={onMouseDown}
+              onMouseUp={onMouseUp}
+            />
           </div>
           <div className="col-3 " align="center">
             <CustomDatePicker />
