@@ -40,7 +40,11 @@ class RepeatInput extends Component {
           </div>
         </div>
         {status ? (
-          <DaysOfWeek />
+          <div className="row">
+            <div className="col-12 border">
+              <DaysOfWeek />
+            </div>
+          </div>
         ) : (
           <div className="row">
             <div className="col-6">
@@ -68,7 +72,11 @@ class RepeatInput extends Component {
                 <option value="Y">{`Year${frequency > 1 ? "s" : ""}`}</option>
               </select>
             </div>
-            <p className="text-center m-2">starting from...</p>
+            <div className="row">
+              <div className="col-12">
+                <p className="text-center m-2">starting from...</p>
+              </div>
+            </div>
             <div className="row">
               <div className="col-12">
                 <CustomDatePicker />

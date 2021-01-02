@@ -3,13 +3,13 @@ import React, { Component } from "react";
 class DaysOfWeek extends Component {
   state = {
     days: [
-      { id: 0, day: "Mon", active: false },
-      { id: 1, day: "Tue", active: false },
-      { id: 2, day: "Wed", active: false },
-      { id: 3, day: "Thu", active: false },
-      { id: 4, day: "Fri", active: false },
-      { id: 5, day: "Sat", active: false },
-      { id: 6, day: "Sun", active: false },
+      { id: 0, day: "Mo", active: false },
+      { id: 1, day: "Tu", active: false },
+      { id: 2, day: "We", active: false },
+      { id: 3, day: "Th", active: false },
+      { id: 4, day: "Fr", active: false },
+      { id: 5, day: "Sa", active: false },
+      { id: 6, day: "Su", active: false },
     ],
   };
   onSelect = (day) => {
@@ -30,19 +30,17 @@ class DaysOfWeek extends Component {
   render() {
     const days = [...this.state.days];
     return (
-      <div className="col-12">
-        <div className="btn-group" role="group">
-          {days.map((day) => (
-            <button
-              type="button"
-              className={this.getButtonClasses(day)}
-              key={day.id}
-              onClick={() => this.onSelect(day)}
-            >
-              {day.day}
-            </button>
-          ))}
-        </div>
+      <div className="btn-group" role="group">
+        {days.map((day) => (
+          <button
+            type="button"
+            className={this.getButtonClasses(day)}
+            key={day.id}
+            onClick={() => this.onSelect(day)}
+          >
+            <span style={{ fontSize: "0.8em" }}>{day.day}</span>
+          </button>
+        ))}
       </div>
     );
   }

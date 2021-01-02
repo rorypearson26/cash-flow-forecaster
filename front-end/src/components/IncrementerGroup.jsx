@@ -2,53 +2,7 @@ import React, { Component } from "react";
 import CurrencyIncrementer from "./CurrencyIncrementer";
 
 class IncrementerGroup extends Component {
-  constructor() {
-    super();
-    const { interval } = this.startInterval;
-    this.resetInterval = this.resetInterval.bind(this);
-    this.stopTimer = this.stopTimer.bind(this);
-    this.timer = null;
-    this.state = {
-      interval: interval,
-      changeFactor: 1.4,
-      values: [0, 50, 60],
-    };
-  }
-  get startInterval() {
-    return {
-      interval: 500,
-    };
-  }
-
-  stopTimer() {
-    clearTimeout(this.timer);
-    this.resetInterval();
-  }
-
-  resetInterval() {
-    this.setState(this.startInterval);
-  }
-
-  // True if plus pressed, false if subtracting
-  onMouseDown = ({ event, addition, index, type }) => {
-    if (event.button === 0 || type == "touch") {
-      let { values, interval, changeFactor } = this.state;
-      let currentValue = values[index];
-      let props = { index, values, currentValue, addition };
-      values = addition === 1 ? this.increasing(props) : this.decreasing(props);
-      this.setState({ values });
-      this.timer = setTimeout(
-        () => this.onMouseDown({ event, addition, index, type }),
-        interval
-      );
-      interval = this.changeInterval(interval, changeFactor);
-      this.setState({ interval });
-    } else {
-      return;
-    }
-  };
-
-  decreasing(props) {
+  static decreasing(props) {
     let { index, values, currentValue, addition } = props;
     console.log(
       `values: ${values}, index: ${index}, currentVal: ${currentValue}`
@@ -76,7 +30,7 @@ class IncrementerGroup extends Component {
     return values;
   }
 
-  increasing(props) {
+  static increasing(props) {
     let { index, values, currentValue, addition } = props;
     const nextIndex = index + addition;
     let newValue = currentValue + addition;
@@ -94,7 +48,7 @@ class IncrementerGroup extends Component {
     return values;
   }
 
-  changeInterval(interval, changeFactor) {
+  static changeInterval(interval, changeFactor) {
     //Don't let update rate fall below this
     const minInterval = 1;
     const newInterval = Math.round(interval / changeFactor);
@@ -105,8 +59,7 @@ class IncrementerGroup extends Component {
   }
 
   render() {
-    const { values } = this.state;
-    const { income } = this.props;
+    const { income, values, onMouseDown, onMouseUp } = this.props;
     const index = {
       best: income ? 2 : 0,
       expected: 1,
@@ -119,8 +72,8 @@ class IncrementerGroup extends Component {
             label="BEST"
             index={index.best}
             value={values[index.best]}
-            onMouseDown={this.onMouseDown}
-            onMouseUp={this.stopTimer}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
           />
         </div>
         <div className="col-12 m-2">
@@ -128,8 +81,8 @@ class IncrementerGroup extends Component {
             label="EXPECTED"
             index={index.expected}
             value={values[index.expected]}
-            onMouseDown={this.onMouseDown}
-            onMouseUp={this.stopTimer}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
           />
         </div>
         <div className="col-12 m-2">
@@ -137,8 +90,8 @@ class IncrementerGroup extends Component {
             label="WORST"
             index={index.worst}
             value={values[index.worst]}
-            onMouseDown={this.onMouseDown}
-            onMouseUp={this.stopTimer}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
           />
         </div>
       </div>

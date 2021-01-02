@@ -9,10 +9,12 @@ import IncrementerGroup from "./IncrementerGroup";
 class TransactionForm extends Component {
   constructor() {
     super();
+    const { interval } = this.startInterval;
+    this.timer = null;
     this.state = {
       income: false,
       label: "",
-      values: { low: null, high: null, expected: null },
+      values: [0, 50, 60],
       repeat: true,
       repeatOnDays: true,
       days: [],
@@ -20,8 +22,46 @@ class TransactionForm extends Component {
       oneOffDate: "",
       repeatType: "",
       repeatFreqency: "",
+      interval: interval,
+      changeFactor: 1.4,
     };
   }
+  get startInterval() {
+    return {
+      interval: 500,
+    };
+  }
+
+  resetInterval = () => {
+    this.setState(this.startInterval);
+  };
+
+  stopTimer = () => {
+    clearTimeout(this.timer);
+    this.resetInterval();
+  };
+
+  // True if plus pressed, false if subtracting
+  onMouseDown = ({ event, addition, index, type }) => {
+    if (event.button === 0 || type === "touch") {
+      let { values, interval, changeFactor } = this.state;
+      let currentValue = values[index];
+      let props = { index, values, currentValue, addition };
+      values =
+        addition === 1
+          ? IncrementerGroup.increasing(props)
+          : IncrementerGroup.decreasing(props);
+      this.setState({ values });
+      this.timer = setTimeout(
+        () => this.onMouseDown({ event, addition, index, type }),
+        interval
+      );
+      interval = IncrementerGroup.changeInterval(interval, changeFactor);
+      this.setState({ interval });
+    } else {
+      return;
+    }
+  };
 
   handleIncomeTypeChange = (checked) => {
     let { income } = this.state;
@@ -58,7 +98,12 @@ class TransactionForm extends Component {
           <TransactionName />
         </div>
         <div className="col-12">
-          <IncrementerGroup income={income} />
+          <IncrementerGroup
+            income={income}
+            values={values}
+            onMouseDown={this.onMouseDown}
+            onMouseUp={this.stopTimer}
+          />
         </div>
         <div className="col-12">
           <div className="row mt-2">
