@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import TransactionSlider from "./TransactionSlider";
 import TransactionName from "./TransactionName";
-import CurrencyIncrementer from "./CurrencyIncrementer";
 import CustomCheck from "./CustomCheck";
 import RepeatInput from "./RepeatInput";
 import CustomDatePicker from "./CustomDatePicker";
@@ -61,33 +60,9 @@ class TransactionForm extends Component {
         <div className="col-12">
           <IncrementerGroup income={income} />
         </div>
-        {/* <div className="col-12 m-2">
-          <CurrencyIncrementer
-            label="BEST"
-            value={values.low}
-            onMouseDown={this.updateValue}
-            onMouseUp={this.stopTimer}
-          />
-        </div>
-        <div className="col-12 m-2">
-          <CurrencyIncrementer
-            label="EXPECTED"
-            value={values.expected}
-            onMouseDown={this.updateValue}
-            onMouseUp={this.stopTimer}
-          />
-        </div>
-        <div className="col-12 m-2">
-          <CurrencyIncrementer
-            label="WORST"
-            value={values.high}
-            onMouseDown={this.updateValue}
-            onMouseUp={this.stopTimer}
-          />
-        </div> */}
         <div className="col-12">
-          <div className="row m-2">
-            <div className="col-6 align-self-center">
+          <div className="row mt-2">
+            <div className="col-6">
               <CustomCheck
                 key={`check${!repeat}`}
                 label="ONE-OFF"
@@ -95,7 +70,7 @@ class TransactionForm extends Component {
                 onClick={this.repeatClicked}
               />
             </div>
-            <div className="col-6 align-self-center">
+            <div className="col-6 ">
               <CustomCheck
                 key={`check${repeat}`}
                 label="REPEAT"
@@ -104,12 +79,19 @@ class TransactionForm extends Component {
               />
             </div>
           </div>
+          <div className="row mt-2">
+            <div className="col-12">
+              {repeat ? (
+                <RepeatInput
+                  status={repeatOnDays}
+                  onClick={this.repeatTypeClicked}
+                />
+              ) : (
+                <CustomDatePicker />
+              )}
+            </div>
+          </div>
         </div>
-        {repeat ? (
-          <RepeatInput status={repeatOnDays} onClick={this.repeatTypeClicked} />
-        ) : (
-          <CustomDatePicker />
-        )}
       </div>
     );
   }

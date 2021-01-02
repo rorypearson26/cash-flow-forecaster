@@ -12,15 +12,29 @@ class CurrencyIncrementer extends Component {
             type="button"
             className="col-3 btn btn-dark"
             onMouseDown={(e) =>
-              onMouseDown({ event: e, addition: -1, index: index })
+              onMouseDown({
+                event: e,
+                addition: -1,
+                index: index,
+                type: "mouse",
+              })
             }
             onMouseUp={() => onMouseUp()}
+            onTouchStart={(e) =>
+              onMouseDown({
+                event: e,
+                addition: -1,
+                index: index,
+                type: "touch",
+              })
+            }
+            onTouchEnd={() => onMouseUp()}
           >
             -
           </button>
           <input
             className="col-6 quantity text-center noselect"
-            readonly="readOnly"
+            readonly
             value={value}
             name="quantity"
             type="number"
@@ -31,9 +45,23 @@ class CurrencyIncrementer extends Component {
             type="button"
             className="col-3 btn btn-dark"
             onMouseDown={(e) =>
-              onMouseDown({ event: e, addition: 1, index: index })
+              onMouseDown({
+                event: e,
+                addition: 1,
+                index: index,
+                type: "mouse",
+              })
             }
             onMouseUp={() => onMouseUp()}
+            onTouchStart={(e) =>
+              onMouseDown({
+                event: e,
+                addition: 1,
+                index: index,
+                type: "touch",
+              })
+            }
+            onTouchEnd={() => onMouseUp()}
           >
             +
           </button>

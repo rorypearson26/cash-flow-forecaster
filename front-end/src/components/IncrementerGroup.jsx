@@ -30,15 +30,15 @@ class IncrementerGroup extends Component {
   }
 
   // True if plus pressed, false if subtracting
-  onMouseDown = ({ event, addition, index }) => {
-    if (event.button === 0) {
+  onMouseDown = ({ event, addition, index, type }) => {
+    if (event.button === 0 || type == "touch") {
       let { values, interval, changeFactor } = this.state;
       let currentValue = values[index];
       let props = { index, values, currentValue, addition };
       values = addition === 1 ? this.increasing(props) : this.decreasing(props);
       this.setState({ values });
       this.timer = setTimeout(
-        () => this.onMouseDown({ event, addition, index }),
+        () => this.onMouseDown({ event, addition, index, type }),
         interval
       );
       interval = this.changeInterval(interval, changeFactor);
@@ -96,28 +96,12 @@ class IncrementerGroup extends Component {
 
   changeInterval(interval, changeFactor) {
     //Don't let update rate fall below this
-    const minInterval = 5;
+    const minInterval = 1;
     const newInterval = Math.round(interval / changeFactor);
     if (newInterval > minInterval) {
       return newInterval;
     }
     return minInterval;
-  }
-
-  // roundTo(n, digits) {
-  //   if (digits === undefined) {
-  //     digits = 0;
-  //   }
-
-  //   var multiplier = Math.pow(10, digits);
-  //   n = parseFloat((n * multiplier).toFixed(11));
-  //   var test = Math.round(n) / multiplier;
-  //   return +test.toFixed(digits);
-  // }
-
-  stopTimer() {
-    clearTimeout(this.timer);
-    this.resetInterval();
   }
 
   render() {

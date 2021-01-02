@@ -24,7 +24,7 @@ class CustomCheck extends Component {
 
   getFontStyle(generalStyle) {
     let fontStyle = {
-      fontSize: "1.5em",
+      fontSize: "1em",
     };
     fontStyle = { ...fontStyle, ...generalStyle };
     return fontStyle;
@@ -36,25 +36,25 @@ class CustomCheck extends Component {
     const { ...checkStyle } = this.getCheckStyle(status, generalStyle);
     const { ...fontStyle } = this.getFontStyle(generalStyle);
     return (
-      <div className="col-12">
-        <div className="row">
-          <div className="col-8 ">
-            <label style={{ ...fontStyle }}>{label}</label>
-          </div>
-          <div className="col-4 ">
-            <div className="fa-2x">
-              <span className="fa-layers fa-fw " onClick={() => onClick()}>
-                <i
-                  className="fas fa-circle"
-                  data-fa-transform="grow-4"
-                  style={{ ...generalStyle }}
-                />
-                <i className="fas fa-check " style={{ ...checkStyle }} />
-              </span>
-            </div>
+      // <div className="col-12">
+      <div className="row">
+        <div className="col-8">
+          <label style={{ ...fontStyle }}>{label}</label>
+        </div>
+        <div className="col-4">
+          <div className="fa-2x">
+            <span className="fa-layers fa-fw " onClick={() => onClick()}>
+              <i
+                className="fas fa-circle"
+                data-fa-transform="grow-4"
+                style={{ ...generalStyle }}
+              />
+              <i className="fas fa-check " style={{ ...checkStyle }} />
+            </span>
           </div>
         </div>
       </div>
+      // </div>
     );
   }
 }

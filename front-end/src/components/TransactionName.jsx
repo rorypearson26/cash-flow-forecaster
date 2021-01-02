@@ -4,7 +4,7 @@ class TransactionName extends Component {
   state = {};
   render() {
     return (
-      <div className="form-group row">
+      <div className="row text-center">
         <div className="col-12">
           <input
             type="text"
