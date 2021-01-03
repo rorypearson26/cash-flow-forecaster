@@ -117,14 +117,38 @@ class TransactionForm extends Component {
   repeatClicked = () => {
     let { repeat } = this.state;
     repeat = repeat ? false : true;
+    this.resetRepeat();
     this.setState({ repeat });
   };
 
   repeatTypeClicked = () => {
     let { repeatOnDays } = this.state;
     repeatOnDays = repeatOnDays ? false : true;
-    console.log("HERE");
+    this.resetPeriod();
     this.setState({ repeatOnDays });
+  };
+
+  resetRepeat = () => {
+    let { repeatOnDays } = this.state;
+    repeatOnDays = false;
+    this.setState({ repeatOnDays });
+    this.resetPeriod();
+  };
+
+  resetPeriod = () => {
+    let { frequency, repeatType, oneOffDate, repeatDate } = this.state;
+    frequency = repeatType = "";
+    oneOffDate = repeatDate = new Date();
+    let days = this.resetDays();
+    this.setState({ frequency, repeatType, oneOffDate, repeatDate, days });
+  };
+
+  resetDays = () => {
+    let { days } = this.state;
+    for (let i = 0; i < days.length; i++) {
+      days[i]["active"] = false;
+    }
+    return days;
   };
 
   handleFrequencyChange = (e) => {
