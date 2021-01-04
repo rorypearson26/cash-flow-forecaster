@@ -115,9 +115,9 @@ class TransactionForm extends Component {
   };
 
   handleIncomeTypeChange = (checked) => {
-    let { income } = this.state.transaction;
-    income = checked;
-    this.setState.transaction({ income });
+    let { transaction } = this.state;
+    transaction.income = checked;
+    this.setState({ transaction });
   };
 
   repeatClicked = () => {
