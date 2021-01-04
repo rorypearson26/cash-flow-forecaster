@@ -2,6 +2,16 @@ import React, { Component } from "react";
 import CurrencyIncrementer from "./CurrencyIncrementer";
 
 class IncrementerGroup extends Component {
+  //Return false if all values are left at 0
+  static validateValues(values) {
+    for (let i = 0; i < values.length; i++) {
+      if (values[i] > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   static decreasing(props) {
     let { index, values, currentValue, addition } = props;
     const nextIndex = index + addition;

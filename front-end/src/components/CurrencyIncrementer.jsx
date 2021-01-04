@@ -7,7 +7,7 @@ class CurrencyIncrementer extends Component {
     return (
       <div>
         {label === false ? null : <label>{label}</label>}
-        <div className="row btn-group" role="group">
+        <div className="row btn-group " role="group">
           <button
             type="button"
             className="col-3 btn btn-dark"
@@ -34,7 +34,7 @@ class CurrencyIncrementer extends Component {
           </button>
           <input
             className="col-6 quantity text-center noselect"
-            readonly
+            readOnly
             value={value}
             name="quantity"
             type="number"

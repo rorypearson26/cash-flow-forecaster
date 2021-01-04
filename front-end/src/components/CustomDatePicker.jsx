@@ -9,14 +9,15 @@ class CustomDatePicker extends Component {
         type="button"
         className="btn btn-block btn-dark "
         onClick={onClick}
+        id="customDateButton"
       >
         {value}
       </button>
     );
-
     return (
       <div className="col-12">
         <DatePicker
+          todayButton="Today"
           value={date}
           selected={date}
           dateFormat="dd/MM/yyyy"

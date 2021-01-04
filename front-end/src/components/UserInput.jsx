@@ -19,6 +19,8 @@ class UserInput extends Component {
     ],
   };
 
+  onSubmit = (props) => console.log(props);
+
   render() {
     return (
       <form>
@@ -27,7 +29,7 @@ class UserInput extends Component {
         </div>
         <div className="row">
           <div className="col-sm-12 col-md-6 border">
-            <TransactionForm />
+            <TransactionForm onSubmit={this.onSubmit} />
           </div>
         </div>
       </form>

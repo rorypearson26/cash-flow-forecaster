@@ -12,7 +12,7 @@ class TransactionName extends Component {
           placeholder="Transaction Name"
           defaultValue={data}
           onChange={(e) => onChange(e)}
-          autocomplete="off"
+          autoComplete="off"
         />
         {error && <div className="alert alert-danger">{error}</div>}
       </div>

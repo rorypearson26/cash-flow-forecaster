@@ -4,6 +4,13 @@ import CustomCheck from "./CustomCheck";
 import DaysOfWeek from "./DaysOfWeek";
 
 class RepeatInput extends Component {
+  static validateRepeat({ repeatType, frequency, days }) {
+    let daysResult = DaysOfWeek.checkActive(days);
+    let periodResult = repeatType === "" || frequency === "" ? false : true;
+    if (daysResult || periodResult === true) return true;
+    return false;
+  }
+
   render() {
     const {
       status,

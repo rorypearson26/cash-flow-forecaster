@@ -5,6 +5,8 @@ import CustomCheck from "./CustomCheck";
 import RepeatInput from "./RepeatInput";
 import CustomDatePicker from "./CustomDatePicker";
 import IncrementerGroup from "./IncrementerGroup";
+import DaysOfWeek from "./DaysOfWeek";
+import Submit from "./Submit";
 import Joi from "joi-browser";
 
 class TransactionForm extends Component {
@@ -13,24 +15,26 @@ class TransactionForm extends Component {
     const { interval } = this.startInterval;
     this.timer = null;
     this.state = {
-      income: false,
-      name: { data: "", error: "" },
-      values: [0, 50, 60],
-      repeat: true,
-      repeatOnDays: true,
-      days: [
-        { id: 0, day: "Mo", active: false },
-        { id: 1, day: "Tu", active: false },
-        { id: 2, day: "We", active: false },
-        { id: 3, day: "Th", active: false },
-        { id: 4, day: "Fr", active: false },
-        { id: 5, day: "Sa", active: false },
-        { id: 6, day: "Su", active: false },
-      ],
-      repeatDate: new Date(),
-      oneOffDate: new Date(),
-      repeatType: "",
-      frequency: "",
+      transaction: {
+        income: false,
+        name: { data: "", error: "" },
+        values: [0, 50, 60],
+        repeat: true,
+        repeatOnDays: true,
+        days: [
+          { id: 0, day: "Mo", active: false },
+          { id: 1, day: "Tu", active: false },
+          { id: 2, day: "We", active: false },
+          { id: 3, day: "Th", active: false },
+          { id: 4, day: "Fr", active: false },
+          { id: 5, day: "Sa", active: false },
+          { id: 6, day: "Su", active: false },
+        ],
+        repeatDate: new Date(),
+        oneOffDate: new Date(),
+        repeatType: "",
+        frequency: "",
+      },
       interval: interval,
       changeFactor: 1.4,
     };
@@ -52,21 +56,21 @@ class TransactionForm extends Component {
   };
 
   handleDaysSelect = (day) => {
-    const days = [...this.state.days];
+    const days = [...this.state.transaction.days];
     const index = days.indexOf(day);
     days[index].active = days[index].active ? false : true;
     this.setState({ days });
   };
 
   handleNameChange = ({ currentTarget: input }) => {
-    const { name } = this.state;
+    const { name } = this.state.transaction;
     const errorMessage = this.validateProperty(input);
     if (errorMessage) {
       name.error = errorMessage;
     } else {
       delete name.error;
-      name.data = input.value;
     }
+    name.data = input.value;
     this.setState({ name });
   };
 
@@ -89,14 +93,16 @@ class TransactionForm extends Component {
   // True if plus pressed, false if subtracting
   onMouseDown = ({ event, addition, index, type }) => {
     if (event.button === 0 || type === "touch") {
-      let { values, interval, changeFactor } = this.state;
+      let { transaction, interval, changeFactor } = this.state;
+      let { values } = this.state.transaction;
       let currentValue = values[index];
       let props = { index, values, currentValue, addition };
       values =
         addition === 1
           ? IncrementerGroup.increasing(props)
           : IncrementerGroup.decreasing(props);
-      this.setState({ values });
+      transaction.values = values;
+      this.setState({ transaction });
       this.timer = setTimeout(
         () => this.onMouseDown({ event, addition, index, type }),
         interval
@@ -109,56 +115,92 @@ class TransactionForm extends Component {
   };
 
   handleIncomeTypeChange = (checked) => {
-    let { income } = this.state;
+    let { income } = this.state.transaction;
     income = checked;
-    this.setState({ income });
+    this.setState.transaction({ income });
   };
 
   repeatClicked = () => {
-    let { repeat } = this.state;
-    repeat = repeat ? false : true;
+    let { transaction } = this.state;
+    transaction.repeat = transaction.repeat ? false : true;
     this.resetRepeat();
-    this.setState({ repeat });
+    this.setState({ transaction });
   };
 
   repeatTypeClicked = () => {
-    let { repeatOnDays } = this.state;
+    let { repeatOnDays } = this.state.transaction;
     repeatOnDays = repeatOnDays ? false : true;
     this.resetPeriod();
     this.setState({ repeatOnDays });
   };
 
   resetRepeat = () => {
-    let { repeatOnDays } = this.state;
+    let { repeatOnDays } = this.state.transaction;
     repeatOnDays = false;
     this.setState({ repeatOnDays });
     this.resetPeriod();
   };
 
   resetPeriod = () => {
-    let { frequency, repeatType, oneOffDate, repeatDate } = this.state;
+    let {
+      frequency,
+      repeatType,
+      oneOffDate,
+      repeatDate,
+      days,
+    } = this.state.transaction;
     frequency = repeatType = "";
     oneOffDate = repeatDate = new Date();
-    let days = this.resetDays();
+    days = DaysOfWeek.resetDays(days);
     this.setState({ frequency, repeatType, oneOffDate, repeatDate, days });
   };
 
-  resetDays = () => {
-    let { days } = this.state;
-    for (let i = 0; i < days.length; i++) {
-      days[i]["active"] = false;
-    }
-    return days;
-  };
-
   handleFrequencyChange = (e) => {
-    const frequency = parseInt(e.target.value);
+    let { frequency } = this.state.transaction;
+    frequency = parseInt(e.target.value);
     this.setState({ frequency });
   };
 
   handleRepTypeChange = (e) => {
-    const repeatType = e.target.value;
+    let { repeatType } = this.state.transaction;
+    repeatType = e.target.value;
     this.setState({ repeatType });
+  };
+
+  handleSubmit = () => {
+    const {
+      days,
+      name,
+      values,
+      repeatType,
+      frequency,
+    } = this.state.transaction;
+    const { transaction } = this.state;
+    const { onSubmit } = this.props;
+
+    let nameResult = this.validateProperty({ name: "name", value: name.data })
+      ? false
+      : true;
+    let valuesResult = IncrementerGroup.validateValues(values);
+    let repeatResult = RepeatInput.validateRepeat({
+      repeatType,
+      frequency,
+      days,
+    });
+
+    if (
+      nameResult === false ||
+      valuesResult === false ||
+      repeatResult === false
+    ) {
+      console.log("check failed");
+    } else {
+      onSubmit({ transaction });
+    }
+
+    console.log(
+      `repeatRes ${repeatResult} valuesRes ${valuesResult} nameRes ${nameResult}`
+    );
   };
 
   render() {
@@ -172,72 +214,76 @@ class TransactionForm extends Component {
       repeatOnDays,
       income,
       values,
-    } = this.state;
-    const { data, error } = this.state.name;
+      name,
+    } = this.state.transaction;
+    const { data, error } = name;
     return (
-      <div className="row m-2 noselect" align="center">
-        <TransactionSlider
-          onChange={this.handleIncomeTypeChange}
-          checked={income}
-          diameter={60}
-          widthRatio={3}
-        />
-        <TransactionName
-          data={data}
-          error={error}
-          onChange={this.handleNameChange}
-        />
-        <IncrementerGroup
-          income={income}
-          values={values}
-          onMouseDown={this.onMouseDown}
-          onMouseUp={this.stopTimer}
-        />
-        <div className="col-12">
-          <div className="row mt-2">
-            <div className="col-6">
-              <CustomCheck
-                key={`check${!repeat}`}
-                label="ONE-OFF"
-                status={!repeat}
-                onClick={this.repeatClicked}
-              />
-            </div>
-            <div className="col-6 ">
-              <CustomCheck
-                key={`check${repeat}`}
-                label="REPEAT"
-                status={repeat}
-                onClick={this.repeatClicked}
-              />
-            </div>
-          </div>
-          <div className="row mt-2">
-            <div className="col-12">
-              {repeat ? (
-                <RepeatInput
-                  status={repeatOnDays}
-                  onClick={this.repeatTypeClicked}
-                  onDaysSelect={this.handleDaysSelect}
-                  onDateChange={this.handleDateChange}
-                  days={days}
-                  name="repeatDate"
-                  date={repeatDate}
-                  handleFrequencyChange={this.handleFrequencyChange}
-                  handleRepTypeChange={this.handleRepTypeChange}
-                  repeatType={repeatType}
-                  frequency={frequency}
+      <div>
+        <div className="row m-2 noselect" align="center">
+          <TransactionSlider
+            onChange={this.handleIncomeTypeChange}
+            checked={income}
+            diameter={60}
+            widthRatio={3}
+          />
+          <TransactionName
+            data={data}
+            error={error}
+            onChange={this.handleNameChange}
+          />
+          <IncrementerGroup
+            income={income}
+            values={values}
+            onMouseDown={this.onMouseDown}
+            onMouseUp={this.stopTimer}
+          />
+          <div className="col-12">
+            <div className="row mt-2">
+              <div className="col-6">
+                <CustomCheck
+                  key={`check${!repeat}`}
+                  label="ONE-OFF"
+                  status={!repeat}
+                  onClick={this.repeatClicked}
                 />
-              ) : (
-                <CustomDatePicker
-                  name="oneOffDate"
-                  date={oneOffDate}
-                  onDateChange={this.handleDateChange}
+              </div>
+              <div className="col-6 ">
+                <CustomCheck
+                  key={`check${repeat}`}
+                  label="REPEAT"
+                  status={repeat}
+                  onClick={this.repeatClicked}
                 />
-              )}
+              </div>
+            </div>
+            <div className="row mt-2">
+              <div className="col-12">
+                {repeat ? (
+                  <RepeatInput
+                    status={repeatOnDays}
+                    onClick={this.repeatTypeClicked}
+                    onDaysSelect={this.handleDaysSelect}
+                    onDateChange={this.handleDateChange}
+                    days={days}
+                    name="repeatDate"
+                    date={repeatDate}
+                    handleFrequencyChange={this.handleFrequencyChange}
+                    handleRepTypeChange={this.handleRepTypeChange}
+                    repeatType={repeatType}
+                    frequency={frequency}
+                  />
+                ) : (
+                  <CustomDatePicker
+                    name="oneOffDate"
+                    date={oneOffDate}
+                    onDateChange={this.handleDateChange}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
+        <Submit onClick={this.handleSubmit} />
       </div>
     );
   }
