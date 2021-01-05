@@ -1,35 +1,78 @@
 import React, { Component } from "react";
 import StartAmount from "./StartAmount";
 import TransactionForm from "./TransactionForm";
+import TransactionTable from "./TransactionTable";
 
 class UserInput extends Component {
   state = {
-    startData: { date: "", amount: "" },
+    key: 0,
+    boundaryData: { startDate: "", endDate: "", amount: "" },
     transactions: [
       {
-        id: 0,
-        label: "",
         income: false,
-        values: { low: 0, high: 50, expected: 25 },
-        days: [],
-        dayNumber: 1,
-        date: new Date(1970, 1, 1),
+        name: { data: "", error: "" },
+        values: [0, 50, 60],
         repeat: true,
+        repeatOnDays: true,
+        days: [
+          { id: 0, day: "Mo", active: false },
+          { id: 1, day: "Tu", active: false },
+          { id: 2, day: "We", active: false },
+          { id: 3, day: "Th", active: false },
+          { id: 4, day: "Fr", active: false },
+          { id: 5, day: "Sa", active: false },
+          { id: 6, day: "Su", active: false },
+        ],
+        repeatDate: new Date(),
+        oneOffDate: new Date(),
+        repeatType: "",
+        frequency: "",
+      },
+      {
+        income: false,
+        name: { data: "", error: "" },
+        values: [0, 50, 60],
+        repeat: true,
+        repeatOnDays: true,
+        days: [
+          { id: 0, day: "Mo", active: false },
+          { id: 1, day: "Tu", active: false },
+          { id: 2, day: "We", active: false },
+          { id: 3, day: "Th", active: false },
+          { id: 4, day: "Fr", active: false },
+          { id: 5, day: "Sa", active: false },
+          { id: 6, day: "Su", active: false },
+        ],
+        repeatDate: new Date(),
+        oneOffDate: new Date(),
+        repeatType: "",
+        frequency: "",
       },
     ],
   };
 
-  onSubmit = (props) => console.log(props);
+  onSubmit = (transaction) => {
+    let { transactions } = this.state;
+    transactions = [...transactions, { ...transaction }];
+    this.setState({ transactions });
+    this.setState({ key: Math.random() });
+  };
 
   render() {
+    const { transactions } = this.state;
     return (
-      <form>
+      <form className="container border">
         <div className="row mt-4 ">
           <StartAmount />
         </div>
+        <div className="row border">
+          <div className="col-12">
+            <TransactionTable transactions={transactions} />
+          </div>
+        </div>
         <div className="row">
           <div className="col-sm-12 col-md-6 border">
-            <TransactionForm onSubmit={this.onSubmit} />
+            <TransactionForm onSubmit={this.onSubmit} key={this.state.key} />
           </div>
         </div>
       </form>

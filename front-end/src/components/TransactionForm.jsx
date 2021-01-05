@@ -201,7 +201,7 @@ class TransactionForm extends Component {
     ) {
       console.log("check failed");
     } else {
-      onSubmit({ transaction });
+      onSubmit(transaction);
     }
 
     console.log(
