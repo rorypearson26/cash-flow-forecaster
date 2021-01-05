@@ -52,27 +52,30 @@ class TransactionForm extends Component {
   }
 
   handleDateChange = ({ date, name }) => {
+    const { transaction } = this.state;
     const startDate = date;
-    this.setState({ [name]: startDate });
+    transaction[name] = startDate;
+    this.setState({ transaction });
   };
 
   handleDaysSelect = (day) => {
     const days = [...this.state.transaction.days];
+    const { transaction } = this.state;
     const index = days.indexOf(day);
-    days[index].active = days[index].active ? false : true;
-    this.setState({ days });
+    transaction.days[index].active = days[index].active ? false : true;
+    this.setState({ transaction });
   };
 
   handleNameChange = ({ currentTarget: input }) => {
-    const { name } = this.state.transaction;
+    const { transaction } = this.state;
     const errorMessage = this.validateProperty(input);
     if (errorMessage) {
-      name.error = errorMessage;
+      transaction.name.error = errorMessage;
     } else {
-      delete name.error;
+      delete transaction.name.error;
     }
-    name.data = input.value;
-    this.setState({ name });
+    transaction.name.data = input.value;
+    this.setState({ transaction });
   };
 
   validateProperty = ({ name, value }) => {
@@ -135,43 +138,37 @@ class TransactionForm extends Component {
   };
 
   repeatTypeClicked = () => {
-    let { repeatOnDays } = this.state.transaction;
-    repeatOnDays = repeatOnDays ? false : true;
+    let { transaction } = this.state;
+    transaction.repeatOnDays = transaction.repeatOnDays ? false : true;
     this.resetPeriod();
-    this.setState({ repeatOnDays });
+    this.setState({ transaction });
   };
 
   resetRepeat = () => {
-    let { repeatOnDays } = this.state.transaction;
-    repeatOnDays = false;
-    this.setState({ repeatOnDays });
+    let { transaction } = this.state;
+    transaction.repeatOnDays = false;
+    this.setState({ transaction });
     this.resetPeriod();
   };
 
   resetPeriod = () => {
-    let {
-      frequency,
-      repeatType,
-      oneOffDate,
-      repeatDate,
-      days,
-    } = this.state.transaction;
-    frequency = repeatType = "";
-    oneOffDate = repeatDate = new Date();
-    days = DaysOfWeek.resetDays(days);
-    this.setState({ frequency, repeatType, oneOffDate, repeatDate, days });
+    let { transaction } = this.state;
+    transaction.frequency = transaction.repeatType = "";
+    transaction.oneOffDate = transaction.repeatDate = new Date();
+    transaction.days = DaysOfWeek.resetDays(transaction.days);
+    this.setState({ transaction });
   };
 
   handleFrequencyChange = (e) => {
-    let { frequency } = this.state.transaction;
-    frequency = parseInt(e.target.value);
-    this.setState({ frequency });
+    let { transaction } = this.state;
+    transaction.frequency = parseInt(e.target.value);
+    this.setState({ transaction });
   };
 
   handleRepTypeChange = (e) => {
-    let { repeatType } = this.state.transaction;
-    repeatType = e.target.value;
-    this.setState({ repeatType });
+    let { transaction } = this.state;
+    transaction.repeatType = e.target.value;
+    this.setState({ transaction });
   };
 
   handleSubmit = () => {
@@ -189,11 +186,13 @@ class TransactionForm extends Component {
       ? false
       : true;
     let valuesResult = IncrementerGroup.validateValues(values);
-    let repeatResult = RepeatInput.validateRepeat({
-      repeatType,
-      frequency,
-      days,
-    });
+    let repeatResult = transaction.repeat
+      ? RepeatInput.validateRepeat({
+          repeatType,
+          frequency,
+          days,
+        })
+      : true;
 
     if (
       nameResult === false ||
