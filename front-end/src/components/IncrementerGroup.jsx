@@ -13,9 +13,9 @@ class IncrementerGroup extends Component {
   }
 
   static decreasing(props) {
-    let { index, values, currentValue, addition } = props;
+    let { index, values, currentValue, addition, changeAmount } = props;
     const nextIndex = index + addition;
-    let newValue = currentValue + addition * 5;
+    let newValue = currentValue + addition * changeAmount;
 
     //Update props:
     props = { ...props, currentValue: newValue, index: nextIndex };
@@ -38,9 +38,9 @@ class IncrementerGroup extends Component {
   }
 
   static increasing(props) {
-    let { index, values, currentValue, addition } = props;
+    let { index, values, currentValue, addition, changeAmount } = props;
     const nextIndex = index + addition;
-    let newValue = currentValue + addition * 5;
+    let newValue = currentValue + addition * changeAmount;
     //Update props:
     props = { ...props, currentValue: newValue, index: nextIndex };
     if (index >= 2) {

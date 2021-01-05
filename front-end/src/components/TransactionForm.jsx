@@ -37,6 +37,7 @@ class TransactionForm extends Component {
       },
       interval: interval,
       changeFactor: 1.4,
+      changeAmount: 1,
     };
   }
 
@@ -86,17 +87,19 @@ class TransactionForm extends Component {
   };
 
   stopTimer = () => {
+    let changeAmount = 1;
     clearTimeout(this.timer);
     this.resetInterval();
+    this.setState({ changeAmount });
   };
 
   // True if plus pressed, false if subtracting
   onMouseDown = ({ event, addition, index, type }) => {
     if (event.button === 0 || type === "touch") {
-      let { transaction, interval, changeFactor } = this.state;
+      let { transaction, interval, changeFactor, changeAmount } = this.state;
       let { values } = this.state.transaction;
       let currentValue = values[index];
-      let props = { index, values, currentValue, addition };
+      let props = { index, values, currentValue, addition, changeAmount };
       values =
         addition === 1
           ? IncrementerGroup.increasing(props)
@@ -107,6 +110,10 @@ class TransactionForm extends Component {
         () => this.onMouseDown({ event, addition, index, type }),
         interval
       );
+      if (changeAmount === 1) {
+        changeAmount = 2;
+        this.setState({ changeAmount });
+      }
       interval = IncrementerGroup.changeInterval(interval, changeFactor);
       this.setState({ interval });
     } else {
