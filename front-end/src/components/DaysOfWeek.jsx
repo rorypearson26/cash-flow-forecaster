@@ -27,6 +27,16 @@ class DaysOfWeek extends Component {
     return false;
   }
 
+  static amountActive(days) {
+    let activeDays = [];
+    for (let i = 0; i < days.length; i++) {
+      if (days[i]["active"] === true) {
+        activeDays = [...activeDays, days[i]];
+      }
+    }
+    return activeDays;
+  }
+
   render() {
     const days = [...this.props.days];
     const { onClick } = this.props;
