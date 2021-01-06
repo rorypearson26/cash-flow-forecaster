@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import StartAmount from "./StartAmount";
+import TransactionCard from "./TransactionCard";
 import TransactionForm from "./TransactionForm";
 import TransactionTable from "./TransactionTable";
 
@@ -10,10 +11,10 @@ class UserInput extends Component {
     transactions: [
       {
         income: false,
-        name: { data: "", error: "" },
-        values: [0, 50, 60],
+        name: { data: "Rent", error: "" },
+        values: [500, 525, 600],
         repeat: true,
-        repeatOnDays: true,
+        repeatOnDays: false,
         days: [
           { id: 0, day: "Mo", active: false },
           { id: 1, day: "Tu", active: false },
@@ -25,18 +26,18 @@ class UserInput extends Component {
         ],
         repeatDate: new Date(),
         oneOffDate: new Date(),
-        repeatType: "",
-        frequency: "",
+        repeatType: "M",
+        frequency: 1,
       },
       {
-        income: false,
-        name: { data: "", error: "" },
-        values: [0, 50, 60],
+        income: true,
+        name: { data: "Deliveroo", error: "" },
+        values: [20, 50, 120],
         repeat: true,
         repeatOnDays: true,
         days: [
           { id: 0, day: "Mo", active: false },
-          { id: 1, day: "Tu", active: false },
+          { id: 1, day: "Tu", active: true },
           { id: 2, day: "We", active: false },
           { id: 3, day: "Th", active: false },
           { id: 4, day: "Fr", active: false },
@@ -58,14 +59,25 @@ class UserInput extends Component {
     this.setState({ key: Math.random() });
   };
 
+  getSize() {
+    let size = "large";
+    // if (screen.width <= 480) {
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+      size = "small";
+    }
+    return size;
+  }
+
   render() {
     const { transactions } = this.state;
+    const size = this.getSize();
     return (
-      <form className="container border">
+      <form className="container-fluid">
+        <p>{size}</p>
         <div className="row mt-4 ">
           <StartAmount />
         </div>
-        <div className="row border">
+        <div className="row ">
           <div className="col-12">
             <TransactionTable transactions={transactions} />
           </div>
