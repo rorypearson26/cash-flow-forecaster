@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import DaysOfWeek from "./DaysOfWeek";
+import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";
 
 class TransactionCard extends Component {
   getDateString() {
@@ -32,9 +34,19 @@ class TransactionCard extends Component {
         } else {
           dateString = "Repeating on: ";
           for (let i = 0; i < activeDays.length; i++) {
-            dateString = dateString + ", " + activeDays[i].longDay;
+            if (i === activeDays.length - 1) {
+              dateString = dateString + " and " + activeDays[i].longDay;
+            } else if (i === 0) {
+              dateString = dateString + activeDays[i].longDay;
+            } else {
+              dateString = dateString + ", " + activeDays[i].longDay;
+            }
           }
         }
+      } else {
+        dateString = `Repeating every ${frequency} ${
+          repeatType.long
+        } from ${repeatDate.toLocaleDateString("en-UK", options)} `;
       }
     }
 
@@ -47,41 +59,61 @@ class TransactionCard extends Component {
     return headerStyle;
   }
 
+  getFooterStyle() {
+    let headerStyle = { color: "white", backgroundColor: "DarkSlateGray" };
+    return headerStyle;
+  }
+
   getBadgeStyle() {
     let badgeStyle = {
       display: "inline-block",
-      width: "70px",
+      width: "80px",
       fontSize: "1.2rem",
       color: "white",
     };
     return badgeStyle;
   }
 
+  getButtonStyle() {
+    const buttonStyle = { color: "white", fontSize: "4rem" };
+    return buttonStyle;
+  }
+
   render() {
     const { income, name, values } = this.props.transaction;
     const { ...headerStyle } = this.getHeaderStyle(income);
+    const { ...footerStyle } = this.getFooterStyle(income);
     const { ...badgeStyle } = this.getBadgeStyle();
+    const { ...buttonStyle } = this.getButtonStyle();
+
     const dateString = this.getDateString();
-    console.log(dateString);
     return (
       <div
-        className="card bg-dark border noselect"
+        className="card bg-dark border-10 noselect"
         style={{
           color: "black",
-          borderRadius: "20px",
+          borderRadius: "10px",
+          borderWidth: "0.5rem",
           overflow: "hidden",
         }}
       >
         <div>
-          <h4 className="card-header text-center" style={{ ...headerStyle }}>
+          <h5 className="card-header text-center" style={{ ...headerStyle }}>
+            <EditButton style={{ ...buttonStyle }} />
             {name.data}
-          </h4>
+            <DeleteButton style={{ ...buttonStyle }} />
+          </h5>
         </div>
         <div className="card-body">
+          <div className="row" style={{ color: "white" }}>
+            <h5 className="col-4 text-center">Best</h5>
+            <h5 className="col-4 text-center">Expected</h5>
+            <h5 className="col-4 text-center">Worst</h5>
+          </div>
           <div className="row">
             <h5 className="col-4 text-center">
               <span
-                class="badge badge-pill "
+                class="badge "
                 style={{ backgroundColor: "green", ...badgeStyle }}
               >
                 £{income ? values[2] : values[0]}
@@ -89,7 +121,7 @@ class TransactionCard extends Component {
             </h5>
             <h5 className="col-4 text-center">
               <span
-                class="badge badge-pill "
+                class="badge "
                 style={{ backgroundColor: "orange", ...badgeStyle }}
               >
                 £{values[1]}
@@ -97,18 +129,16 @@ class TransactionCard extends Component {
             </h5>
             <h5 className="col-4 text-center">
               <span
-                class="badge badge-pill "
+                class="badge"
                 style={{ backgroundColor: "red", ...badgeStyle }}
               >
                 £{income ? values[0] : values[2]}
               </span>
             </h5>
           </div>
-          <div>
-            <h4 className="text-center m-2" style={{ color: "white" }}>
-              {dateString}
-            </h4>
-          </div>
+        </div>
+        <div className="card-footer " style={{ ...footerStyle }}>
+          <h5 className="text-center m-1">{dateString}</h5>
         </div>
       </div>
     );

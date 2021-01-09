@@ -32,7 +32,7 @@ class TransactionForm extends Component {
         ],
         repeatDate: new Date(),
         oneOffDate: new Date(),
-        repeatType: "",
+        repeatType: { short: "", long: "" },
         frequency: "",
       },
       interval: interval,
@@ -167,7 +167,9 @@ class TransactionForm extends Component {
 
   handleRepTypeChange = (e) => {
     let { transaction } = this.state;
-    transaction.repeatType = e.target.value;
+    // let { target } = e;
+    // transaction.repeatType.short = target.value;
+    transaction.repeatType.long = e.target.options[e.target.selectedIndex].text;
     this.setState({ transaction });
   };
 

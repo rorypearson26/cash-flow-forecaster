@@ -26,7 +26,7 @@ class UserInput extends Component {
         ],
         repeatDate: new Date(),
         oneOffDate: new Date(),
-        repeatType: "M",
+        repeatType: { short: "M", long: "Month" },
         frequency: 1,
       },
       {
@@ -46,7 +46,7 @@ class UserInput extends Component {
         ],
         repeatDate: new Date(),
         oneOffDate: new Date(2020, 11, 11),
-        repeatType: "",
+        repeatType: { short: "", long: "" },
         frequency: "",
       },
       {
@@ -56,7 +56,7 @@ class UserInput extends Component {
         repeat: true,
         repeatOnDays: true,
         days: [
-          { id: 0, day: "Mo", longDay: "Monday", active: false },
+          { id: 0, day: "Mo", longDay: "Monday", active: true },
           { id: 1, day: "Tu", longDay: "Tuesday", active: true },
           { id: 2, day: "We", longDay: "Wednesday", active: false },
           { id: 3, day: "Th", longDay: "Thursday", active: true },
@@ -66,7 +66,7 @@ class UserInput extends Component {
         ],
         repeatDate: new Date(),
         oneOffDate: new Date(),
-        repeatType: "",
+        repeatType: { short: "", long: "" },
         frequency: "",
       },
     ],
