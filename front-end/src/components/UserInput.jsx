@@ -10,19 +10,20 @@ class UserInput extends Component {
     boundaryData: { startDate: "", endDate: "", amount: "" },
     transactions: [
       {
+        id: 0,
         income: false,
         name: { data: "Rent", error: "" },
         values: [500, 525, 600],
         repeat: true,
         repeatOnDays: false,
         days: [
-          { id: 0, day: "Mo", active: false },
-          { id: 1, day: "Tu", active: false },
-          { id: 2, day: "We", active: false },
-          { id: 3, day: "Th", active: false },
-          { id: 4, day: "Fr", active: false },
-          { id: 5, day: "Sa", active: false },
-          { id: 6, day: "Su", active: false },
+          { id: 0, day: "Mo", longDay: "Monday", active: false },
+          { id: 1, day: "Tu", longDay: "Tuesday", active: false },
+          { id: 2, day: "We", longDay: "Wednesday", active: false },
+          { id: 3, day: "Th", longDay: "Thursday", active: false },
+          { id: 4, day: "Fr", longDay: "Friday", active: false },
+          { id: 5, day: "Sa", longDay: "Saturday", active: false },
+          { id: 6, day: "Su", longDay: "Sunday", active: false },
         ],
         repeatDate: new Date(),
         oneOffDate: new Date(),
@@ -30,6 +31,7 @@ class UserInput extends Component {
         frequency: 1,
       },
       {
+        id: 1,
         income: false,
         name: { data: "Car Insurance", error: "" },
         values: [450, 600, 900],
@@ -50,8 +52,9 @@ class UserInput extends Component {
         frequency: "",
       },
       {
+        id: 2,
         income: true,
-        name: { data: "Deliveroo", error: "" },
+        name: { data: "Deliveroo extension onto the next line", error: "" },
         values: [20, 50, 120],
         repeat: true,
         repeatOnDays: true,
@@ -70,6 +73,14 @@ class UserInput extends Component {
         frequency: "",
       },
     ],
+  };
+
+  handleDelete = (transactionID) => {
+    const transactions = this.state.transactions.filter(
+      (t) => t.id !== transactionID
+    );
+    this.setState({ transactions });
+    console.log("HERE");
   };
 
   onSubmit = (transaction) => {
@@ -99,7 +110,10 @@ class UserInput extends Component {
         </div>
         <div className="row ">
           <div className="col-12">
-            <TransactionTable transactions={transactions} />
+            <TransactionTable
+              transactions={transactions}
+              onDelete={this.handleDelete}
+            />
           </div>
         </div>
         <div className="row">

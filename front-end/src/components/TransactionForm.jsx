@@ -167,8 +167,6 @@ class TransactionForm extends Component {
 
   handleRepTypeChange = (e) => {
     let { transaction } = this.state;
-    // let { target } = e;
-    // transaction.repeatType.short = target.value;
     transaction.repeatType.long = e.target.options[e.target.selectedIndex].text;
     this.setState({ transaction });
   };

@@ -75,12 +75,13 @@ class TransactionCard extends Component {
   }
 
   getButtonStyle() {
-    const buttonStyle = { color: "white", fontSize: "4rem" };
+    const buttonStyle = { color: "white", fontSize: "2rem", cursor: "pointer" };
     return buttonStyle;
   }
 
   render() {
-    const { income, name, values } = this.props.transaction;
+    const { income, name, values, id } = this.props.transaction;
+    const { onDelete, key } = this.props;
     const { ...headerStyle } = this.getHeaderStyle(income);
     const { ...footerStyle } = this.getFooterStyle(income);
     const { ...badgeStyle } = this.getBadgeStyle();
@@ -99,9 +100,15 @@ class TransactionCard extends Component {
       >
         <div>
           <h5 className="card-header text-center" style={{ ...headerStyle }}>
-            <EditButton style={{ ...buttonStyle }} />
-            {name.data}
-            <DeleteButton style={{ ...buttonStyle }} />
+            <div className="row ">
+              <div className="col-2 my-auto" style={{ ...buttonStyle }}>
+                <EditButton />
+              </div>
+              <div className="col-8 my-auto">{name.data}</div>
+              <div className="col-2 my-auto" style={{ ...buttonStyle }}>
+                <DeleteButton onClick={() => onDelete()} id={id} />
+              </div>
+            </div>
           </h5>
         </div>
         <div className="card-body">
