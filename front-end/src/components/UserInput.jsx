@@ -7,6 +7,7 @@ import TransactionTable from "./TransactionTable";
 class UserInput extends Component {
   state = {
     key: 0,
+    editTransaction: null,
     boundaryData: { startDate: "", endDate: "", amount: "" },
     transactions: [
       {
@@ -82,6 +83,10 @@ class UserInput extends Component {
     this.setState({ transactions });
   };
 
+  handleEdit = (transaction) => {
+    this.setState({ editTransaction: transaction });
+  };
+
   onSubmit = (transaction) => {
     let { transactions } = this.state;
     transactions = [...transactions, { ...transaction }];
@@ -99,7 +104,7 @@ class UserInput extends Component {
   }
 
   render() {
-    const { transactions } = this.state;
+    const { editTransaction, transactions } = this.state;
     const size = this.getSize();
     return (
       <form className="container-fluid">
@@ -112,12 +117,17 @@ class UserInput extends Component {
             <TransactionTable
               transactions={transactions}
               onDelete={this.handleDelete}
+              onEdit={this.handleEdit}
             />
           </div>
         </div>
         <div className="row">
           <div className="col-sm-12 col-md-6 border">
-            <TransactionForm onSubmit={this.onSubmit} key={this.state.key} />
+            <TransactionForm
+              onSubmit={this.onSubmit}
+              key={this.state.key}
+              editTransaction={editTransaction}
+            />
           </div>
         </div>
       </form>

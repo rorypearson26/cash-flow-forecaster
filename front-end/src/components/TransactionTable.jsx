@@ -4,7 +4,7 @@ import TransactionCard from "./TransactionCard";
 class TransactionTable extends Component {
   render() {
     const transactions = [...this.props.transactions];
-    const { onDelete } = this.props;
+    const { onDelete, onEdit } = this.props;
     return (
       // <table class="table table-striped table-dark">
       //   <thead>
@@ -33,7 +33,11 @@ class TransactionTable extends Component {
       <div>
         {transactions.map((transaction, i) => (
           <div key={i} className="mt-2 mb-2">
-            <TransactionCard onDelete={onDelete} transaction={transaction} />
+            <TransactionCard
+              onDelete={onDelete}
+              onEdit={onEdit}
+              transaction={transaction}
+            />
           </div>
         ))}
       </div>

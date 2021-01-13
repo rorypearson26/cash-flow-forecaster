@@ -215,6 +215,11 @@ class TransactionForm extends Component {
   };
 
   render() {
+    let useableTransaction = this.props.editTransaction;
+    console.log(useableTransaction);
+    if (useableTransaction === null) {
+      useableTransaction = this.state.transaction;
+    }
     const {
       days,
       oneOffDate,
@@ -226,7 +231,7 @@ class TransactionForm extends Component {
       income,
       values,
       name,
-    } = this.state.transaction;
+    } = useableTransaction;
     const { data, error } = name;
     return (
       <div>

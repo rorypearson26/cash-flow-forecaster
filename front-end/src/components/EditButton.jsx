@@ -2,7 +2,12 @@ import React, { Component } from "react";
 
 class EditButton extends Component {
   render() {
-    return <i className="fas fa-edit"></i>;
+    const { onClick, transaction, style } = this.props;
+    return (
+      <span onClick={() => onClick(transaction)}>
+        <i className="fas fa-edit" style={{ ...style }}></i>
+      </span>
+    );
   }
 }
 
