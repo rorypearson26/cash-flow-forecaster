@@ -7,13 +7,13 @@ class CustomCheck extends Component {
       justifyContent: "center",
       alignItems: "center",
       height: "100%",
-      color: "white",
+      // color: "white",
     };
     return generalStyle;
   }
 
   getCheckStyle(status, generalStyle) {
-    const colour = status ? "green" : "white";
+    const colour = status ? "green" : "gray";
     let checkStyle = {
       color: colour,
       cursor: "pointer",

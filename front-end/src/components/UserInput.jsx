@@ -3,10 +3,12 @@ import StartAmount from "./StartAmount";
 import TransactionCard from "./TransactionCard";
 import TransactionForm from "./TransactionForm";
 import TransactionTable from "./TransactionTable";
+import TransactionModal from "./TransactionModal";
 
 class UserInput extends Component {
   state = {
     key: 0,
+    show: false,
     editTransaction: null,
     boundaryData: { startDate: "", endDate: "", amount: "" },
     transactions: [
@@ -85,13 +87,14 @@ class UserInput extends Component {
 
   handleEdit = (transaction) => {
     this.setState({ editTransaction: transaction });
+    this.handleShow();
   };
 
   onSubmit = (transaction) => {
     let { transactions } = this.state;
     transactions = [...transactions, { ...transaction }];
     this.setState({ transactions });
-    this.setState({ key: Math.random() });
+    this.handleClose();
   };
 
   getSize() {
@@ -103,8 +106,11 @@ class UserInput extends Component {
     return size;
   }
 
+  handleClose = () => this.setState({ show: false, editTransaction: null });
+  handleShow = () => this.setState({ show: true });
+
   render() {
-    const { editTransaction, transactions } = this.state;
+    const { editTransaction, transactions, show } = this.state;
     const size = this.getSize();
     return (
       <form className="container-fluid">
@@ -113,7 +119,7 @@ class UserInput extends Component {
           <StartAmount />
         </div>
         <div className="row ">
-          <div className="col-12">
+          <div className="col-md-6">
             <TransactionTable
               transactions={transactions}
               onDelete={this.handleDelete}
@@ -123,9 +129,11 @@ class UserInput extends Component {
         </div>
         <div className="row">
           <div className="col-sm-12 col-md-6 border">
-            <TransactionForm
+            <TransactionModal
               onSubmit={this.onSubmit}
-              key={this.state.key}
+              onShow={this.handleShow}
+              onClose={this.handleClose}
+              show={show}
               editTransaction={editTransaction}
             />
           </div>

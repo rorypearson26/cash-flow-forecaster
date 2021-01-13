@@ -6,7 +6,9 @@ class CurrencyIncrementer extends Component {
 
     return (
       <div>
-        {label === false ? null : <label>{label}</label>}
+        <h5 className="card-header text-center">
+          {label === false ? null : <label>{label}</label>}
+        </h5>
         <div className="row btn-group " role="group">
           <button
             type="button"

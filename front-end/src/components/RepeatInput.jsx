@@ -70,7 +70,7 @@ class RepeatInput extends Component {
             </div>
             <div className="col-6">
               <select
-                value={repeatType}
+                value={repeatType.short}
                 className="custom-select "
                 onChange={(e) => handleRepTypeChange(e)}
               >

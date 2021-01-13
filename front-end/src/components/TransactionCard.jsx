@@ -66,7 +66,7 @@ class TransactionCard extends Component {
   getBadgeStyle() {
     let badgeStyle = {
       display: "inline-block",
-      width: "80px",
+      // width: "70px",
       fontSize: "1.2rem",
       color: "white",
     };
@@ -93,7 +93,7 @@ class TransactionCard extends Component {
         style={{
           color: "black",
           borderRadius: "10px",
-          borderWidth: "0.5rem",
+          borderWidth: "0.3rem",
           overflow: "hidden",
         }}
       >
@@ -120,40 +120,44 @@ class TransactionCard extends Component {
           </h5>
         </div>
         <div className="card-body">
-          <div className="row" style={{ color: "white" }}>
-            <h5 className="col-4 text-center">Best</h5>
-            <h5 className="col-4 text-center">Expected</h5>
-            <h5 className="col-4 text-center">Worst</h5>
-          </div>
-          <div className="row">
-            <h5 className="col-4 text-center">
-              <span
-                className="badge "
-                style={{ backgroundColor: "green", ...badgeStyle }}
-              >
-                £{income ? values[2] : values[0]}
-              </span>
-            </h5>
-            <h5 className="col-4 text-center">
-              <span
-                className="badge "
-                style={{ backgroundColor: "orange", ...badgeStyle }}
-              >
-                £{values[1]}
-              </span>
-            </h5>
-            <h5 className="col-4 text-center">
-              <span
-                className="badge"
-                style={{ backgroundColor: "red", ...badgeStyle }}
-              >
-                £{income ? values[0] : values[2]}
-              </span>
-            </h5>
+          <div className="row text-center" style={{ color: "white" }}>
+            <div className="col-4 text-center ">
+              <h7>Best</h7>
+              <h6>
+                <span
+                  className="badge "
+                  style={{ backgroundColor: "green", ...badgeStyle }}
+                >
+                  £{income ? values[2] : values[0]}
+                </span>
+              </h6>
+            </div>
+            <div className="col-4 text-center">
+              <h7>Avg</h7>
+              <h6>
+                <span
+                  className="badge "
+                  style={{ backgroundColor: "orange", ...badgeStyle }}
+                >
+                  £{values[1]}
+                </span>
+              </h6>
+            </div>
+            <div className="col-4 text-center ">
+              <h7>Worst</h7>
+              <h6>
+                <span
+                  className="badge "
+                  style={{ backgroundColor: "red", ...badgeStyle }}
+                >
+                  £{income ? values[0] : values[2]}
+                </span>
+              </h6>
+            </div>
           </div>
         </div>
         <div className="card-footer " style={{ ...footerStyle }}>
-          <h5 className="text-center m-1">{dateString}</h5>
+          <h6 className="text-center m-1">{dateString}</h6>
         </div>
       </div>
     );

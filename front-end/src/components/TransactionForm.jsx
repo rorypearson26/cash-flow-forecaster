@@ -10,12 +10,14 @@ import Submit from "./Submit";
 import Joi from "joi-browser";
 
 class TransactionForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     const { interval } = this.startInterval;
     this.timer = null;
-    this.state = {
-      transaction: {
+    console.log(this.props);
+    let transaction;
+    if (this.props.editTransaction === null) {
+      transaction = {
         income: false,
         name: { data: "", error: "" },
         values: [0, 50, 60],
@@ -32,12 +34,18 @@ class TransactionForm extends Component {
         ],
         repeatDate: new Date(),
         oneOffDate: new Date(),
-        repeatType: { short: "", long: "" },
+        repeatType: {},
         frequency: "",
-      },
+      };
+    } else {
+      transaction = this.props.editTransaction;
+    }
+    this.state = {
+      transaction: { ...transaction },
       interval: interval,
       changeFactor: 1.4,
       changeAmount: 1,
+      submitError: "",
     };
   }
 
@@ -172,7 +180,11 @@ class TransactionForm extends Component {
 
   handleRepTypeChange = (e) => {
     let { transaction } = this.state;
-    transaction.repeatType.long = e.target.options[e.target.selectedIndex].text;
+    const repeatType = {
+      short: e.target.options[e.target.selectedIndex].value,
+      long: e.target.options[e.target.selectedIndex].text,
+    };
+    transaction.repeatType = repeatType;
     this.setState({ transaction });
   };
 
@@ -204,7 +216,8 @@ class TransactionForm extends Component {
       valuesResult === false ||
       repeatResult === false
     ) {
-      console.log("check failed");
+      const submitError = "Cannot proceed: check form inputs are valid";
+      this.setState({ submitError });
     } else {
       onSubmit(transaction);
     }
@@ -215,11 +228,6 @@ class TransactionForm extends Component {
   };
 
   render() {
-    let useableTransaction = this.props.editTransaction;
-    console.log(useableTransaction);
-    if (useableTransaction === null) {
-      useableTransaction = this.state.transaction;
-    }
     const {
       days,
       oneOffDate,
@@ -231,8 +239,10 @@ class TransactionForm extends Component {
       income,
       values,
       name,
-    } = useableTransaction;
+    } = this.state.transaction;
+    const { show, submitError } = this.state;
     const { data, error } = name;
+
     return (
       <div>
         <div className="row m-2 noselect" align="center">
@@ -300,6 +310,7 @@ class TransactionForm extends Component {
           </div>
         </div>
         <Submit onClick={this.handleSubmit} />
+        {submitError && <div className="alert alert-danger">{submitError}</div>}
       </div>
     );
   }

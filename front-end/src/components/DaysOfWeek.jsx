@@ -49,7 +49,7 @@ class DaysOfWeek extends Component {
             key={day.id}
             onClick={() => onClick(day)}
           >
-            <span style={{ fontSize: "80%" }}>{day.day}</span>
+            <span style={{ fontSize: "60%" }}>{day.day}</span>
           </button>
         ))}
       </div>
