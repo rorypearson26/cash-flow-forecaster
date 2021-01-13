@@ -89,11 +89,16 @@ class TransactionForm extends Component {
     this.setState(this.startInterval);
   };
 
-  stopTimer = () => {
+  stopTimer = (e = null) => {
     let changeAmount = 1;
     clearTimeout(this.timer);
     this.resetInterval();
     this.setState({ changeAmount });
+    if (e !== null) {
+      // (e) => {
+      e.preventDefault();
+      // };
+    }
   };
 
   // True if plus pressed, false if subtracting

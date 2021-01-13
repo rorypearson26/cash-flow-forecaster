@@ -5,7 +5,6 @@ class TransactionTable extends Component {
   render() {
     const transactions = [...this.props.transactions];
     const { onDelete } = this.props;
-    console.log(transactions);
     return (
       // <table class="table table-striped table-dark">
       //   <thead>
@@ -33,13 +32,8 @@ class TransactionTable extends Component {
       // </table>
       <div>
         {transactions.map((transaction, i) => (
-          <div className="mt-2 mb-2">
-            <TransactionCard
-              key={i}
-              onDelete={() => onDelete()}
-              index={i}
-              transaction={transaction}
-            />
+          <div key={i} className="mt-2 mb-2">
+            <TransactionCard onDelete={onDelete} transaction={transaction} />
           </div>
         ))}
       </div>

@@ -28,7 +28,6 @@ class TransactionCard extends Component {
     } else {
       if (repeatOnDays === true) {
         let activeDays = DaysOfWeek.amountActive(days);
-        console.log(activeDays);
         if (activeDays.length <= 1) {
           dateString = "Repeating every: " + activeDays[0].longDay;
         } else {
@@ -81,7 +80,7 @@ class TransactionCard extends Component {
 
   render() {
     const { income, name, values, id } = this.props.transaction;
-    const { onDelete, key } = this.props;
+    const { onDelete } = this.props;
     const { ...headerStyle } = this.getHeaderStyle(income);
     const { ...footerStyle } = this.getFooterStyle(income);
     const { ...badgeStyle } = this.getBadgeStyle();
@@ -105,8 +104,12 @@ class TransactionCard extends Component {
                 <EditButton />
               </div>
               <div className="col-8 my-auto">{name.data}</div>
-              <div className="col-2 my-auto" style={{ ...buttonStyle }}>
-                <DeleteButton onClick={() => onDelete()} id={id} />
+              <div className="col-2 my-auto">
+                <DeleteButton
+                  style={{ ...buttonStyle }}
+                  onClick={onDelete}
+                  id={id}
+                />
               </div>
             </div>
           </h5>
@@ -120,7 +123,7 @@ class TransactionCard extends Component {
           <div className="row">
             <h5 className="col-4 text-center">
               <span
-                class="badge "
+                className="badge "
                 style={{ backgroundColor: "green", ...badgeStyle }}
               >
                 £{income ? values[2] : values[0]}
@@ -128,7 +131,7 @@ class TransactionCard extends Component {
             </h5>
             <h5 className="col-4 text-center">
               <span
-                class="badge "
+                className="badge "
                 style={{ backgroundColor: "orange", ...badgeStyle }}
               >
                 £{values[1]}
@@ -136,7 +139,7 @@ class TransactionCard extends Component {
             </h5>
             <h5 className="col-4 text-center">
               <span
-                class="badge"
+                className="badge"
                 style={{ backgroundColor: "red", ...badgeStyle }}
               >
                 £{income ? values[0] : values[2]}

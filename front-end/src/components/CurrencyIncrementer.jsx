@@ -29,7 +29,7 @@ class CurrencyIncrementer extends Component {
               })
             }
             onMouseLeave={() => onMouseUp()}
-            onTouchEnd={() => onMouseUp()}
+            onTouchEnd={(e) => onMouseUp(e)}
           >
             -
           </button>
@@ -63,7 +63,7 @@ class CurrencyIncrementer extends Component {
               })
             }
             onMouseLeave={() => onMouseUp()}
-            onTouchEnd={() => onMouseUp()}
+            onTouchEnd={(e) => onMouseUp(e)}
           >
             +
           </button>

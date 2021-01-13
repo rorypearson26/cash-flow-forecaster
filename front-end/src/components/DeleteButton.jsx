@@ -2,8 +2,12 @@ import React, { Component } from "react";
 
 class DeleteButton extends Component {
   render() {
-    const { onClick, id } = this.props;
-    return <i class="far fa-times-circle" onClick={() => onClick(id)}></i>;
+    const { onClick, id, style } = this.props;
+    return (
+      <span onClick={() => onClick(id)}>
+        <i className="far fa-times-circle" style={{ ...style }}></i>
+      </span>
+    );
   }
 }
 

@@ -80,7 +80,6 @@ class UserInput extends Component {
       (t) => t.id !== transactionID
     );
     this.setState({ transactions });
-    console.log("HERE");
   };
 
   onSubmit = (transaction) => {
