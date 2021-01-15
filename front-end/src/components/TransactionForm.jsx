@@ -14,10 +14,10 @@ class TransactionForm extends Component {
     super(props);
     const { interval } = this.startInterval;
     this.timer = null;
-    console.log(this.props);
     let transaction = {};
     if (this.props.editTransaction === null) {
       transaction = {
+        id: "",
         income: false,
         name: { data: "", error: "" },
         values: [0, 50, 60],
@@ -47,7 +47,6 @@ class TransactionForm extends Component {
       changeAmount: 1,
       submitError: "",
     };
-    console.log(transaction);
   }
 
   schema = {
@@ -104,9 +103,7 @@ class TransactionForm extends Component {
     this.resetInterval();
     this.setState({ changeAmount });
     if (e !== null) {
-      // (e) => {
       e.preventDefault();
-      // };
     }
   };
 
@@ -228,6 +225,10 @@ class TransactionForm extends Component {
     );
   };
 
+  isEditForm(editTransaction) {
+    return editTransaction ? true : false;
+  }
+
   render() {
     const {
       days,
@@ -310,7 +311,10 @@ class TransactionForm extends Component {
             </div>
           </div>
         </div>
-        <Submit onClick={this.handleSubmit} />
+        <Submit
+          onClick={this.handleSubmit}
+          isEditForm={this.isEditForm(this.props.editTransaction)}
+        />
         {submitError && <div className="alert alert-danger">{submitError}</div>}
       </div>
     );

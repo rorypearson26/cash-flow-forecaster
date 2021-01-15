@@ -91,11 +91,33 @@ class UserInput extends Component {
   };
 
   onSubmit = (transaction) => {
-    let { transactions } = this.state;
-    transactions = [...transactions, { ...transaction }];
+    let transactions = [...this.state.transactions];
+    let id = transaction.id;
+    console.log(`id is ${id}`);
+    if (id === "") {
+      let id = this.getMaxID() + 1;
+      transaction.id = id;
+      transactions = [...transactions, { ...transaction }];
+    } else {
+      let index = _.findIndex(transactions, { id });
+      console.log(`index is ${index}`);
+
+      transactions.splice(index, 1, { ...transaction });
+    }
     this.setState({ transactions });
     this.handleClose();
   };
+
+  getMaxID() {
+    let transactions = [...this.state.transactions];
+    let maxID = Math.max.apply(
+      Math,
+      transactions.map(function (t) {
+        return t.id;
+      })
+    );
+    return maxID;
+  }
 
   getSize() {
     let size = "large";

@@ -20,7 +20,9 @@ class TransactionModal extends Component {
           style={{ color: "black" }}
         >
           <Modal.Header style={{ alignItems: "center" }} closeButton>
-            <Modal.Title>Add/Edit Transaction</Modal.Title>
+            <Modal.Title>
+              {editTransaction ? "EDIT TRANSACTION" : "ADD TRANSACTION"}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <TransactionForm
