@@ -15,7 +15,7 @@ class TransactionForm extends Component {
     const { interval } = this.startInterval;
     this.timer = null;
     console.log(this.props);
-    let transaction;
+    let transaction = {};
     if (this.props.editTransaction === null) {
       transaction = {
         income: false,
@@ -38,7 +38,7 @@ class TransactionForm extends Component {
         frequency: "",
       };
     } else {
-      transaction = this.props.editTransaction;
+      transaction = { ...this.props.editTransaction };
     }
     this.state = {
       transaction: { ...transaction },
@@ -47,6 +47,7 @@ class TransactionForm extends Component {
       changeAmount: 1,
       submitError: "",
     };
+    console.log(transaction);
   }
 
   schema = {
@@ -240,7 +241,7 @@ class TransactionForm extends Component {
       values,
       name,
     } = this.state.transaction;
-    const { show, submitError } = this.state;
+    const { submitError } = this.state;
     const { data, error } = name;
 
     return (

@@ -5,7 +5,7 @@ import CustomDatePicker from "./CustomDatePicker";
 
 class StartAmount extends Component {
   render() {
-    const { onMouseDown, onMouseUp, value } = this.props;
+    const { onMouseDown, onMouseUp, value, repeatDate } = this.props;
     return (
       <div className="col-12">
         <div className="row m-2">
@@ -20,7 +20,11 @@ class StartAmount extends Component {
             />
           </div>
           <div className="col-3 " align="center">
-            <CustomDatePicker />
+            <CustomDatePicker
+              name="repeatDate"
+              date={repeatDate}
+              onDateChange={this.handleDateChange}
+            />
           </div>
         </div>
       </div>

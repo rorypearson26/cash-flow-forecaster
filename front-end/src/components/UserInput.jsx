@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import StartAmount from "./StartAmount";
-import TransactionCard from "./TransactionCard";
-import TransactionForm from "./TransactionForm";
 import TransactionTable from "./TransactionTable";
 import TransactionModal from "./TransactionModal";
+import _ from "lodash";
 
 class UserInput extends Component {
   state = {
@@ -86,7 +85,8 @@ class UserInput extends Component {
   };
 
   handleEdit = (transaction) => {
-    this.setState({ editTransaction: transaction });
+    const editTransaction = _.cloneDeep(transaction);
+    this.setState({ editTransaction });
     this.handleShow();
   };
 
@@ -110,14 +110,14 @@ class UserInput extends Component {
   handleShow = () => this.setState({ show: true });
 
   render() {
-    const { editTransaction, transactions, show } = this.state;
+    const { editTransaction, transactions, show, boundaryData } = this.state;
     const size = this.getSize();
     return (
       <form className="container-fluid">
         <p>{size}</p>
-        <div className="row mt-4 ">
-          <StartAmount />
-        </div>
+        {/* <div className="row mt-4 ">
+          <StartAmount boundaryData={boundaryData} />
+        </div> */}
         <div className="row ">
           <div className="col-md-6">
             <TransactionTable
@@ -127,8 +127,8 @@ class UserInput extends Component {
             />
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-12 col-md-6 border">
+        <div className="row text-center">
+          <div className="col-sm-12 col-md-6 ">
             <TransactionModal
               onSubmit={this.onSubmit}
               onShow={this.handleShow}
