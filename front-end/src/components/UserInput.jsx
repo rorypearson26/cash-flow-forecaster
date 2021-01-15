@@ -110,12 +110,15 @@ class UserInput extends Component {
 
   getMaxID() {
     let transactions = [...this.state.transactions];
-    let maxID = Math.max.apply(
-      Math,
-      transactions.map(function (t) {
-        return t.id;
-      })
-    );
+    let maxID = -1;
+    if (transactions.length > 0) {
+      maxID = Math.max.apply(
+        Math,
+        transactions.map(function (t) {
+          return t.id;
+        })
+      );
+    }
     return maxID;
   }
 
