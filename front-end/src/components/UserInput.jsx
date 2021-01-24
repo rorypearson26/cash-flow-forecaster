@@ -9,7 +9,11 @@ class UserInput extends Component {
     key: 0,
     show: false,
     editTransaction: null,
-    boundaryData: { startDate: "", endDate: "", amount: "" },
+    boundaryData: {
+      startDate: new Date(),
+      endDate: new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000),
+      value: 0,
+    },
     transactions: [
       {
         id: 0,
@@ -77,6 +81,12 @@ class UserInput extends Component {
     ],
   };
 
+  handleStartAmount = (input) => {
+    let { boundaryData } = this.state;
+    boundaryData.value = input.value;
+    this.setState({ boundaryData });
+  };
+
   handleDelete = (transactionID) => {
     const transactions = this.state.transactions.filter(
       (t) => t.id !== transactionID
@@ -140,9 +150,12 @@ class UserInput extends Component {
     return (
       <form className="container-fluid">
         <p>{size}</p>
-        {/* <div className="row mt-4 ">
-          <StartAmount boundaryData={boundaryData} />
-        </div> */}
+        <div className="row mt-4 ">
+          <StartAmount
+            boundaryData={boundaryData}
+            onChange={this.handleStartAmount}
+          />
+        </div>
         <div className="row ">
           <div className="col-md-6">
             <TransactionTable
