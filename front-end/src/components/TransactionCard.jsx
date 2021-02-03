@@ -122,7 +122,7 @@ class TransactionCard extends Component {
         <div className="card-body">
           <div className="row text-center" style={{ color: "white" }}>
             <div className="col-4 text-center ">
-              <h7>Best</h7>
+              <h6>Best</h6>
               <h6>
                 <span
                   className="badge "
@@ -133,7 +133,7 @@ class TransactionCard extends Component {
               </h6>
             </div>
             <div className="col-4 text-center">
-              <h7>Avg</h7>
+              <h6>Avg</h6>
               <h6>
                 <span
                   className="badge "
@@ -144,7 +144,7 @@ class TransactionCard extends Component {
               </h6>
             </div>
             <div className="col-4 text-center ">
-              <h7>Worst</h7>
+              <h6>Worst</h6>
               <h6>
                 <span
                   className="badge "

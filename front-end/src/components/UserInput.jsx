@@ -3,6 +3,7 @@ import StartAmount from "./StartAmount";
 import TransactionTable from "./TransactionTable";
 import TransactionModal from "./TransactionModal";
 import _ from "lodash";
+import axios from "axios";
 
 class UserInput extends Component {
   state = {
@@ -143,6 +144,29 @@ class UserInput extends Component {
 
   handleClose = () => this.setState({ show: false, editTransaction: null });
   handleShow = () => this.setState({ show: true });
+
+  async handleRequest() {
+    await axios({
+      url: `http://localhost:80/api/imagetransfer`,
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: formData,
+      contentType: false,
+      processData: false,
+    })
+      .then((res) => {
+        this.handleReturn(res.data);
+      })
+      .catch((error) => {
+        this.handleError(error);
+      });
+  }
+
+  handleReturn(data) {
+    console.log(data);
+  }
 
   render() {
     const { editTransaction, transactions, show, boundaryData } = this.state;

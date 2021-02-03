@@ -15,7 +15,7 @@ class TransactionModal extends Component {
         <Modal
           show={show}
           onHide={onClose}
-          backdrop="true"
+          backdrop={true}
           keyboard={false}
           style={{ color: "black" }}
         >

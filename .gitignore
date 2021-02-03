@@ -25,3 +25,7 @@
 /front-end/.eslintcache
 
 #***********FRONT-END*****************
+
+#************BACK-END*****************
+/back-end/flask/venv
+

@@ -9,7 +9,7 @@ class CustomDatePicker extends Component {
         type="button"
         className="btn btn-block btn-dark "
         onClick={onClick}
-        id="customDateButton"
+        // id="customDateButton"
       >
         {value}
       </button>
